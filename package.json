@@ -1,0 +1,43 @@
+{
+  "name": "vocabulary",
+  "version": "1.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:andersjanmyr/vocabulary.git"
+  },
+  "scripts": {
+    "build-src": "browserify -t coffeeify --extension='.coffee' app/src/main.coffee | uglifyjs -mc > static/bundle.js",
+    "build-less": "lessc app/less/main.less static/main.css",
+    "build": "npm run build-src && npm run build-less",
+    "watch-src": "watchify app/src/main.coffee -t coffeeify --extension='.coffee' -o static/bundle.js -dv",
+    "watch-less": "nodemon --watch app/less/main.less --ext less --exec 'npm run' build-less",
+    "start": "bin/server",
+    "watch-server": "nodemon --ignore app --watch . --watch lib --ext coffee --ignore static bin/server",
+    "watch": "npm run watch-src & npm run watch-less & npm run watch-server",
+    "test": "mocha --reporter spec test",
+    "deploy": "./bin/deploy.sh"
+  },
+  "dependencies": {
+    "body-parser": "^1.0.0",
+    "coffee-script": "^1.7.1",
+    "cookie-parser": "^1.0.1",
+    "debug": "^0.7.4",
+    "express": "^4.0.0",
+    "morgan": "^1.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^3.14.0",
+    "coffeeify": "^0.6.0",
+    "envify": "^1.2.1",
+    "jshint": "^2.4.4",
+    "less": "^1.5.1",
+    "moment": "^2.5.1",
+    "nodemon": "^1.0.15",
+    "react": "^0.9.0",
+    "react-tools": "^0.9.0",
+    "reactify": "^0.5.1",
+    "uglify-js": "^2.4.8",
+    "watchify": "^0.6.2"
+  }
+}

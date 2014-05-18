@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+require('coffee-script/register');
+var server = require('../lib/server');
+
+var port = process.env.PORT || 3000;
+
+server.listen(port);
+console.log(process.env.NODE_ENV + ' Server started on port: ' + port);
