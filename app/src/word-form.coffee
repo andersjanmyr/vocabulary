@@ -40,8 +40,8 @@ module.exports = React.createClass
             ]
             WordList({words: this.state.words})
             Dom.div { id: 'inputs' }, [
-                Dom.input {ref: 'word1'}
-                Dom.input {ref: 'word2'}
+                Dom.input {ref: 'word1', type: 'text'}
+                Dom.input {ref: 'word2', type: 'text'}
                 Dom.input {type: 'button', value: 'Add',  onClick: this.onClick}
             ]
         ]

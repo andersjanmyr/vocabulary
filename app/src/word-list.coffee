@@ -13,6 +13,5 @@ module.exports = React.createClass
         this.props.words.map(this.renderRow)
 
     render: ->
-        console.log(this.props.words)
         Dom.div {id: 'word-list'}, this.renderRows()
 

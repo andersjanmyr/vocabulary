@@ -30,6 +30,10 @@ body {
     clear: both;
 }
 
+.row {
+    clear: both;
+}
+
 .row > * {
     float: left;
     width: 30%;
@@ -39,9 +43,12 @@ body {
     clear: both;
 }
 
-#inputs > * {
+#inputs > input[type='text'] {
     text-align: left;
     width: 30%;
+}
+#inputs > input[type='button'] {
+    display: block;
 }
 
 header {
