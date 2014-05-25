@@ -1,10 +1,11 @@
 React = require 'react'
+WordForm = require './word-form'
 
 Dom = React.DOM
 module.exports = React.createClass
     render: ->
         Dom.div {id: 'panel'}, [
-            Dom.div { id: 'vocabulary'}, null
+            new WordForm(),
             Dom.div { id: 'something'}, null
         ]
 

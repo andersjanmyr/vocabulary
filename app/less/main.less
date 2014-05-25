@@ -1,13 +1,4 @@
 body {
-    height: 100%;
-    background: rgba(5,1,5,1);
-    background: -moz-linear-gradient(left, rgba(5,1,5,1) 0%, rgba(44,57,35,1) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(5,1,5,1)), color-stop(100%, rgba(44,57,35,1)));
-    background: -webkit-linear-gradient(left, rgba(5,1,5,1) 0%, rgba(44,57,35,1) 100%);
-    background: -o-linear-gradient(left, rgba(5,1,5,1) 0%, rgba(44,57,35,1) 100%);
-    background: -ms-linear-gradient(left, rgba(5,1,5,1) 0%, rgba(44,57,35,1) 100%);
-    background: linear-gradient(to right, rgba(5,1,5,1) 0%, rgba(44,57,35,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#050105', endColorstr='#2c3923', GradientType=1 );
 }
 
 .main-color() {
@@ -26,118 +17,35 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#050105', end
     line-height: 1.1em;
 }
 
-
-#content {
-    text-align: left;
-    width: 80%;
+#word-form {
     margin: auto;
-    color: white;
+}
+
+#languages > * {
+    float: left;
+    width: 30%;
+}
+
+#word-list {
+    clear: both;
+}
+
+.row > * {
+    float: left;
+    width: 30%;
+}
+
+#inputs {
+    clear: both;
+}
+
+#inputs > * {
+    text-align: left;
+    width: 30%;
 }
 
 header {
     margin-top: 20px;
-}
-
-#skull {
-    float: left;
-    width: 80px;
-    margin-right: 50px;
-    transition: transform 30s;
-    -webkit-transition: -webkit-transform 30s;
-    -moz-transition: -moz-transform 30s;
-}
-
-.rotate {
-    transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-}
-
-
-#title {
-    font-size: 64px;
-    .main-font();
-}
-
-#date-form {
-    float: right;
-}
-
-.date-field {
-    padding: 4px;
-    .main-font();
-    font-size: 18px;
-    border-radius: 3px;
-}
-
-.valid {
-    border: 5px solid green;
-}
-.invalid {
-    border: 5px solid red;
-}
-
-#quote {
-    clear: both;
-}
-
-
-.quote-wrapper {
-    position: relative;
-    top: 50px;
-    margin: 50px auto;
-    width: 500px;
-}
-
-.quote {
-    .secondary-font();
-    font-size: 32pt;
-}
-
-.author {
-    .secondary-color();
-    .main-font();
-    font-size: 22pt;
-    margin-top: 20px;
-    margin-left: 20px;
-}
-
-
-#clock {
-    clear: both;
-    margin-top: 150px;
-}
-.death-clock {
-    margin: 5px;
-    font-family: 'American Typewriter' 'Times New Roman';
-    font-size: 18pt;
-    span {
-        padding-left: 5px;
-    }
-}
-
-.age-and-birth {
-    float: right;
-}
-
-.time-to-live {
-    float: left;
-    text-align: left;
-}
-
-.time-to-live-label {
-    .secondary-color();
-}
-
-#footer {
-    clear: both;
-    .secondary-color();
-}
-
-#info {
-    margin-right: 20px;
-    margin-top: 20px;
-    float: right;
 }
 
 a, a:visited {

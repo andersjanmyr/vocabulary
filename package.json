@@ -13,7 +13,7 @@
     "watch-src": "watchify app/src/main.coffee -t coffeeify --extension='.coffee' -o static/bundle.js -dv",
     "watch-less": "nodemon --watch app/less/main.less --ext less --exec 'npm run' build-less",
     "start": "bin/server",
-    "watch-server": "nodemon --ignore app --watch . --watch lib --ext coffee --ignore static bin/server",
+    "watch-server": "nodemon --watch lib --ext .coffee bin/server",
     "watch": "npm run watch-src & npm run watch-less & npm run watch-server",
     "test": "mocha --reporter spec test",
     "deploy": "./bin/deploy.sh"

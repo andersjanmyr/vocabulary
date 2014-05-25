@@ -18,6 +18,6 @@ Main = React.createClass
 
 console.log document.body
 
-React.renderComponent(new Main(), document.body);
+React.renderComponent(Main(), document.body);
 
 
