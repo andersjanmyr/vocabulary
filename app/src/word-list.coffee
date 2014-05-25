@@ -5,8 +5,8 @@ module.exports = React.createClass
 
     renderRow: (pair) ->
         Dom.div {className: 'row '}, [
-            Dom.div {className: 'word1 '}, pair[0],
-            Dom.div {className: 'word2 '}, pair[1]
+            Dom.div({className: 'word1 '}, pair[0]),
+            Dom.div({className: 'word2 '}, pair[1])
         ]
 
     renderRows: ->
