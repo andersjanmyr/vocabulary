@@ -21,6 +21,7 @@ module.exports = React.createFactory React.createClass
       Dom.option {key: lang, value: lang }, lang
 
   onClick: (e) ->
+    e.preventDefault()
     newPair = [
       this.refs.word1.getDOMNode().value,
           this.refs.word2.getDOMNode().value
@@ -32,6 +33,9 @@ module.exports = React.createFactory React.createClass
       this.state.message = 'Words already exists, not added!'
     else
       this.state.words.push newPair
+      this.refs.word1.getDOMNode().value = ''
+      this.refs.word1.getDOMNode().focus()
+      this.refs.word2.getDOMNode().value = ''
     this.setState(this.state)
 
   message: ->
@@ -41,15 +45,16 @@ module.exports = React.createFactory React.createClass
   render: ->
     Dom.form {id: 'word-form'}, [
       this.message(),
-      Dom.div { id: 'languages' }, [
-        Dom.select {id: 'lang1 ', defaultValue: this.state.lang1}, this.languageOptions()
-        Dom.select {id: 'lang2 ', defaultValue: this.state.lang2}, this.languageOptions()
-      ],
+      Dom.input({ id: 'form-name', ref: 'form-name', placeholder: 'Book, chapter, ...'}),
+      Dom.div({ id: 'languages' }, [
+        Dom.select({id: 'lang1 ', defaultValue: this.state.lang1}, this.languageOptions())
+        Dom.select({id: 'lang2 ', defaultValue: this.state.lang2}, this.languageOptions())
+      ]),
       WordList({words: this.state.words}),
-      Dom.div { id: 'inputs' }, [
-        Dom.input {ref: 'word1', type: 'text'}
-          Dom.input {ref: 'word2', type: 'text'}
-          Dom.input {type: 'button', value: 'Add',  onClick: this.onClick}
-      ]
+      Dom.div({ id: 'inputs' }, [
+        Dom.input({ref: 'word1', type: 'text'}),
+        Dom.input({ref: 'word2', type: 'text'}),
+        Dom.button({ref: 'addButton', onClick: this.onClick}, 'Add words')
+      ])
     ]
 

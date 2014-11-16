@@ -13,7 +13,7 @@ Main = React.createClass
   render: ->
     Dom.div {id: 'main'}, [
       Header()
-          Panel()
+      Panel()
     ]
 
 console.log document.body

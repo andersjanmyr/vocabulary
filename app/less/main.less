@@ -1,3 +1,5 @@
+* { box-sizing: border-box }
+
 .main-color() {
   color: white;
 }
@@ -28,7 +30,7 @@ header {
 
 #logo-text {
   float: left;
-  font-family: 'American Typewriter' 'Times New Roman';
+  .main-font();
   font-size: 32pt;
   margin-top: 15px;
   margin-left: -50px;
@@ -37,6 +39,7 @@ header {
 
 #panel {
   clear: both;
+  margin-left: 80px;
 }
 
 
@@ -57,13 +60,32 @@ a, a:visited {
   margin: auto;
 }
 
-#languages > * {
-  float: left;
-  width: 30%;
+#form-name {
+  margin: 10px 0;
+  border-radius: 5px;
+  width: 80%;
+  font-size: 18pt;
+
 }
+
+.form-style() {
+  .main-font();
+  float: left;
+  min-width: 200px;
+  width: 40%;
+  max-width: 400px;
+  font-size: 14pt;
+  padding: 3px;
+}
+
+#languages > * {
+  .form-style();
+}
+
 
 #word-list {
   clear: both;
+  margin: 30px 0;
 }
 
 .row {
@@ -71,9 +93,17 @@ a, a:visited {
 }
 
 .row > * {
-  float: left;
-  width: 30%;
+  .form-style();
 }
+
+.row:nth-child(2n+1) * {
+  background-color: lightgreen;
+}
+
+.row:nth-child(2n) * {
+  background-color: #dfd;
+}
+
 
 #inputs {
   clear: both;
@@ -81,9 +111,11 @@ a, a:visited {
 
 #inputs > input[type='text'] {
   text-align: left;
-  width: 30%;
+  .form-style();
 }
-#inputs > input[type='button'] {
+#inputs > button {
   display: block;
+  float: left;
+  font-size: 14pt;
 }
 
