@@ -5,8 +5,7 @@ set -o errexit
 git stash save 'Before deploy'
 git checkout deploy
 git merge master --no-edit
-npm run build.js
-npm run build-less
+npm run build
 if git commit -am Deploy; then
   echo 'Changes Committed'
 fi
