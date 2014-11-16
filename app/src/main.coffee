@@ -10,11 +10,11 @@ React.initializeTouchEvents(true);
 
 Dom = React.DOM
 Main = React.createClass
-    render: ->
-        Dom.div {id: 'main'}, [
-            Header()
-            Panel()
-        ]
+  render: ->
+    Dom.div {id: 'main'}, [
+      Header()
+          Panel()
+    ]
 
 console.log document.body
 
