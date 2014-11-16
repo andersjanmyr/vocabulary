@@ -6,8 +6,13 @@ cookieParser = require("cookie-parser")
 bodyParser = require("body-parser")
 debug = require("debug")("vocabulary:server")
 wordlists = require('./word-lists')
+livereload = require('express-livereload')
 
 app = express()
+
+isDevelopment = ->
+  process.env.NODE_ENV is 'development'
+livereload(app, config={}) if isDevelopment()
 
 app.use logger("dev")
 app.use bodyParser.json()
