@@ -1,68 +1,89 @@
-body {
-}
-
 .main-color() {
-    color: white;
+  color: white;
 }
 .secondary-color() {
-    color: #aaa;
+  color: #aaa;
 }
 .main-font() {
-    font-family: 'American Typewriter' 'Times New Roman';;
+  font-family: 'American Typewriter' 'Times New Roman';;
 }
 
 .secondary-font() {
-    font: 400 100px/1.2 'Merienda One', Helvetica, sans-serif;
-    text-shadow: 3px 3px 3px #333;
-    line-height: 1.1em;
+  font: 400 100px/1.2 'Merienda One', Helvetica, sans-serif;
+  text-shadow: 3px 3px 3px #333;
+  line-height: 1.1em;
 }
 
-#message {
-    background-color: lightgray;
-    padding: 5px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-#word-form {
-    margin: auto;
-}
-
-#languages > * {
-    float: left;
-    width: 30%;
-}
-
-#word-list {
-    clear: both;
-}
-
-.row {
-    clear: both;
-}
-
-.row > * {
-    float: left;
-    width: 30%;
-}
-
-#inputs {
-    clear: both;
-}
-
-#inputs > input[type='text'] {
-    text-align: left;
-    width: 30%;
-}
-#inputs > input[type='button'] {
-    display: block;
+body {
+  .main-font();
 }
 
 header {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
+#logo-image {
+  float: left;
+}
+
+#logo-text {
+  float: left;
+  font-family: 'American Typewriter' 'Times New Roman';
+  font-size: 32pt;
+  margin-top: 15px;
+  margin-left: -50px;
+  color: #486723;
+}
+
+#panel {
+  clear: both;
+}
+
+
 a, a:visited {
-    .secondary-color();
+  .secondary-color();
+}
+
+
+
+#message {
+  background-color: lightgray;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#word-form {
+  margin: auto;
+}
+
+#languages > * {
+  float: left;
+  width: 30%;
+}
+
+#word-list {
+  clear: both;
+}
+
+.row {
+  clear: both;
+}
+
+.row > * {
+  float: left;
+  width: 30%;
+}
+
+#inputs {
+  clear: both;
+}
+
+#inputs > input[type='text'] {
+  text-align: left;
+  width: 30%;
+}
+#inputs > input[type='button'] {
+  display: block;
 }
 
