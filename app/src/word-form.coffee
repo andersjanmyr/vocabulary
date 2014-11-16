@@ -6,13 +6,18 @@ Dom = React.DOM
 module.exports = React.createFactory React.createClass
   getInitialState: ->
     {
-      lang1: 'Swedish',
-      lang2: 'English',
-      words: [
-        [ 'Katt', 'Cat'],
-        [ 'Hund', 'Dog']
-      ],
-      message: null
+      inputWord1: null,
+      inputWord2: null,
+      message: null,
+      wordList: {
+        name: 'A demo list',
+        lang1: 'Swedish',
+        lang2: 'English',
+        words: [
+          [ 'Katt', 'Cat'],
+          [ 'Hund', 'Dog']
+        ]
+      }
     }
 
   languages: [ 'Swedish', 'English', 'Spanish']
@@ -22,38 +27,69 @@ module.exports = React.createFactory React.createClass
 
   onClick: (e) ->
     e.preventDefault()
-    newPair = [
-      this.refs.word1.getDOMNode().value,
-          this.refs.word2.getDOMNode().value
-    ]
-    duplicates = this.state.words.filter (pair) ->
-      return pair if pair[0] is newPair[0] or pair[1] is newPair[1]
+    state = this.state
+    words = this.state.wordList.words
+    exists1 = words.some (pair) ->
+      return true if pair[0] is state.inputWord1
+    exists2 = words.some (pair) ->
+      return true if pair[1] is state.inputWord2
 
-    if duplicates.length > 0
-      this.state.message = 'Words already exists, not added!'
+    if exists1
+      this.state.message = 'Word already exists, not added!'
+      elWord1 = this.refs.inputWord1.getDOMNode()
+      elWord1.focus()
+      elWord1.select()
+    else if exists2
+      this.state.message = 'Word already exists, not added!'
+      elWord2 = this.refs.inputWord2.getDOMNode()
+      elWord2.focus()
+      elWord2.select()
     else
-      this.state.words.push newPair
-      this.refs.word1.getDOMNode().value = ''
-      this.refs.word1.getDOMNode().focus()
-      this.refs.word2.getDOMNode().value = ''
+      elWord1 = this.refs.inputWord1.getDOMNode().focus()
+      words.push [this.state.inputWord1, this.state.inputWord2]
+      this.state.inputWord1 = ''
+      this.state.inputWord2 = ''
     this.setState(this.state)
+
+  componentDidMount: ->
+    this.refs.inputWord1.getDOMNode().focus()
+
 
   message: ->
     if this.state.message
       Dom.div {id: 'message'}, this.state.message
 
+  stateInput: (name) ->
+    Dom.input({
+      ref: name,
+      type: 'text',
+      value: this.state[name],
+      onChange: =>
+        this.state[name] = this.refs[name].getDOMNode().value
+        this.setState(this.state)
+    })
+
+
   render: ->
     Dom.form {id: 'word-form'}, [
       this.message(),
-      Dom.input({ id: 'form-name', ref: 'form-name', placeholder: 'Book, chapter, ...'}),
+      Dom.input({
+        id: 'form-name',
+        ref: 'name',
+        placeholder: 'Book, chapter, ...'
+        value: this.state.wordList.name,
+        onChange: =>
+          this.state.wordList.name = this.refs.name.getDOMNode().value
+          this.setState(this.state)
+      }),
       Dom.div({ id: 'languages' }, [
-        Dom.select({id: 'lang1 ', defaultValue: this.state.lang1}, this.languageOptions())
-        Dom.select({id: 'lang2 ', defaultValue: this.state.lang2}, this.languageOptions())
+        Dom.select({id: 'lang1', value: this.state.wordList.lang1}, this.languageOptions())
+        Dom.select({id: 'lang2', value: this.state.wordList.lang2}, this.languageOptions())
       ]),
-      WordList({words: this.state.words}),
+      WordList({words: this.state.wordList.words}),
       Dom.div({ id: 'inputs' }, [
-        Dom.input({ref: 'word1', type: 'text'}),
-        Dom.input({ref: 'word2', type: 'text'}),
+        this.stateInput('inputWord1'),
+        this.stateInput('inputWord2'),
         Dom.button({ref: 'addButton', onClick: this.onClick}, 'Add words')
       ])
     ]
