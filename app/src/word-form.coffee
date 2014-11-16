@@ -3,7 +3,7 @@ React = require 'react'
 WordList = require './word-list'
 
 Dom = React.DOM
-module.exports = React.createClass
+module.exports = React.createFactory React.createClass
   getInitialState: ->
     {
       lang1: 'Swedish',

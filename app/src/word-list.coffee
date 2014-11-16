@@ -1,7 +1,7 @@
 React = require 'react'
 
 Dom = React.DOM
-module.exports = React.createClass
+module.exports = React.createFactory React.createClass
 
   renderRow: (pair) ->
     Dom.div {className: 'row '}, [
