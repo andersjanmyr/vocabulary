@@ -7,10 +7,10 @@
     "url": "git@github.com:andersjanmyr/vocabulary.git"
   },
   "scripts": {
-    "build-src": "browserify -t coffeeify --extension='.coffee' app/src/main.coffee | uglifyjs -mc > static/bundle.js",
+    "build-src": "browserify -t coffeeify --extension='.coffee' -t literalify app/src/main.coffee | uglifyjs -mc > static/bundle.js",
     "build-less": "lessc app/less/main.less static/main.css",
     "build": "npm run build-src && npm run build-less",
-    "watch-src": "watchify app/src/main.coffee -t coffeeify --extension='.coffee' -o static/bundle.js -dv",
+    "watch-src": "watchify app/src/main.coffee -t coffeeify --extension='.coffee' -t literalify -o static/bundle.js -dv",
     "watch-less": "nodemon --watch app/less/main.less --ext less --exec 'npm run' build-less",
     "start": "bin/server",
     "watch-server": "nodemon --watch lib --ext .coffee bin/server",
@@ -33,11 +33,13 @@
     "express-livereload": "*",
     "jshint": "*",
     "less": "*",
+    "literalify": "^0.3.0",
     "nodemon": "*",
     "react": "*",
     "react-tools": "*",
     "reactify": "*",
     "uglify-js": "*",
     "watchify": "*"
-  }
+  },
+  "literalify": {"react": "window.React"}
 }
