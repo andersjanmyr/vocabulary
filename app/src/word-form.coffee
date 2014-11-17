@@ -9,15 +9,7 @@ module.exports = React.createFactory React.createClass
       inputWord1: null,
       inputWord2: null,
       message: null,
-      wordList: {
-        name: 'A demo list',
-        lang1: 'Swedish',
-        lang2: 'English',
-        words: [
-          [ 'Katt', 'Cat'],
-          [ 'Hund', 'Dog']
-        ]
-      }
+      wordList: this.props.wordList
     }
 
   languages: [ 'Swedish', 'English', 'Spanish']

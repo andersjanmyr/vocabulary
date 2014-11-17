@@ -3,21 +3,26 @@
 React = require 'react'
 
 app = {}
-Header = require './header'
-Panel = require './panel'
+Page = require './page'
+WordForm = require './word-form'
 
-React.initializeTouchEvents(true);
+React.initializeTouchEvents(true)
 
-Dom = React.DOM
-Main = React.createClass
-  render: ->
-    Dom.div {id: 'main'}, [
-      Header()
-      Panel()
-    ]
+wordList = {
+  name: 'A new demo list',
+  lang1: 'Swedish',
+  lang2: 'English',
+  words: [
+    [ 'Fisk', 'Fisk'],
+    [ 'Katt', 'Cat'],
+    [ 'Hund', 'Dog']
+  ]
+}
+
+wordListPage = Page({pageClass: 'word-form', content: WordForm({wordList: wordList})})
 
 console.log document.body
 
-React.render(React.createFactory(Main)(), document.body);
+React.render(wordListPage, document.body);
 
 
