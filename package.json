@@ -41,5 +41,7 @@
     "uglify-js": "*",
     "watchify": "*"
   },
-  "literalify": {"react": "window.React"}
+  "literalify": {
+    "react": "window.React"
+  }
 }
