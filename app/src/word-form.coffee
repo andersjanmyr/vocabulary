@@ -4,6 +4,7 @@ WordList = require './word-list'
 
 Dom = React.DOM
 module.exports = React.createFactory React.createClass
+  mixins: [React.addons.LinkedStateMixin]
   getInitialState: ->
     {
       inputWord1: null,
@@ -15,7 +16,7 @@ module.exports = React.createFactory React.createClass
   languages: [ 'Swedish', 'English', 'Spanish']
   languageOptions: (selectedLang) ->
     this.languages.map (lang) ->
-      Dom.option {key: lang, value: lang }, lang
+      Dom.option {key: lang, value: lang}, lang
 
   onClick: (e) ->
     e.preventDefault()
@@ -55,10 +56,7 @@ module.exports = React.createFactory React.createClass
     Dom.input({
       ref: name,
       type: 'text',
-      value: this.state[name],
-      onChange: =>
-        this.state[name] = this.refs[name].getDOMNode().value
-        this.setState(this.state)
+      valueLink: this.linkState(name)
     })
 
 
@@ -75,8 +73,10 @@ module.exports = React.createFactory React.createClass
           this.setState(this.state)
       }),
       Dom.div({ id: 'languages' }, [
-        Dom.select({id: 'lang1', value: this.state.wordList.lang1}, this.languageOptions())
-        Dom.select({id: 'lang2', value: this.state.wordList.lang2}, this.languageOptions())
+        Dom.select({ id: 'lang1', valueLink: this.linkState('lang1')},
+          this.languageOptions())
+        Dom.select({ id: 'lang2', valueLink: this.linkState('lang2')},
+          this.languageOptions())
       ]),
       WordList({words: this.state.wordList.words}),
       Dom.div({ id: 'inputs' }, [
