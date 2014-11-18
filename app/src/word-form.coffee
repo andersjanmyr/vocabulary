@@ -19,6 +19,7 @@ module.exports = React.createFactory React.createClass
       Dom.option {key: lang, value: lang}, lang
 
   onClick: (e) ->
+    console.log this.state.wordList
     e.preventDefault()
     state = this.state
     words = this.state.wordList.words

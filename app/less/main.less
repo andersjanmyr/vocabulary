@@ -92,15 +92,15 @@ a, a:visited {
   clear: both;
 }
 
-.row > * {
+.row > input, .row > div {
   .form-style();
 }
 
-.row:nth-child(2n+1) * {
+.row:nth-child(odd) div {
   background-color: lightgreen;
 }
 
-.row:nth-child(2n) * {
+.row:nth-child(even) div {
   background-color: #dfd;
 }
 
