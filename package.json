@@ -24,13 +24,13 @@
     "cookie-parser": "*",
     "debug": "*",
     "express": "^4.0.0",
+    "livereload": "^0.3.4",
     "morgan": "*"
   },
   "devDependencies": {
     "browserify": "*",
     "coffeeify": "*",
     "envify": "*",
-    "express-livereload": "*",
     "jshint": "*",
     "less": "*",
     "literalify": "^0.3.0",

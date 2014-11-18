@@ -6,15 +6,18 @@ cookieParser = require("cookie-parser")
 bodyParser = require("body-parser")
 debug = require("debug")("vocabulary:server")
 wordlists = require('./word-lists')
-livereload = require('express-livereload')
+livereload = require('livereload')
 
 app = express()
 
-staticDir = path.join(__dirname, '..', 'static');
+staticDir = path.join(__dirname, '..', 'static')
 
 isDevelopment = ->
   process.env.NODE_ENV is 'development'
-livereload(app, {watchDir: staticDir}) if isDevelopment()
+
+if isDevelopment()
+  server = livereload.createServer()
+  server.watch(staticDir)
 
 app.use logger("dev")
 app.use bodyParser.json()
