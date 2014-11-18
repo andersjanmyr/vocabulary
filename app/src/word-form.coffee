@@ -38,6 +38,7 @@ module.exports = React.createFactory React.createClass
       elWord2.focus()
       elWord2.select()
     else
+      this.state.message = null
       elWord1 = this.refs.inputWord1.getDOMNode().focus()
       words.push [this.state.inputWord1, this.state.inputWord2]
       this.state.inputWord1 = ''
