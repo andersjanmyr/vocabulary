@@ -10,7 +10,7 @@ module.exports = React.createFactory React.createClass
       inputWord1: null,
       inputWord2: null,
       message: null,
-      wordList: this.props.wordList
+      wordList: $.extend(true, {}, this.props.wordList)
     }
 
   languages: [ 'Swedish', 'English', 'Spanish']
