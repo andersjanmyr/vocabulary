@@ -19,9 +19,9 @@ wordList = {
   ]
 }
 
-wordListPage = Page({pageClass: 'word-form', content: WordForm({wordList: wordList})})
-
-console.log document.body
+wordListPage = Page({
+  pageClass: 'word-form',
+  content: WordForm({wordList: wordList})})
 
 React.render(wordListPage, document.body);
 

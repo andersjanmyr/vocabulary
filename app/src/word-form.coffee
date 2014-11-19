@@ -1,6 +1,7 @@
 React = require 'react'
 
 WordList = require './word-list'
+MessagePanel = require './message-panel'
 
 Dom = React.DOM
 module.exports = React.createFactory React.createClass
@@ -9,7 +10,6 @@ module.exports = React.createFactory React.createClass
     {
       inputWord1: null,
       inputWord2: null,
-      message: null,
       wordList: $.extend(true, {}, this.props.wordList)
     }
 
@@ -29,17 +29,16 @@ module.exports = React.createFactory React.createClass
       return true if pair[1] is state.inputWord2
 
     if exists1 or !state.inputWord1
-      this.state.message = 'Word already exists, not added!'
+      MessagePanel.showError("Word already exists, #{state.inputWord1}, not added!")
       elWord1 = this.refs.inputWord1.getDOMNode()
       elWord1.focus()
       elWord1.select()
     else if exists2 or !state.inputWord2
-      this.state.message = 'Word already exists, not added!'
+      MessagePanel.showError("Word already exists, #{state.inputWord2}, not added!")
       elWord2 = this.refs.inputWord2.getDOMNode()
       elWord2.focus()
       elWord2.select()
     else
-      this.state.message = null
       elWord1 = this.refs.inputWord1.getDOMNode().focus()
       words.push [this.state.inputWord1, this.state.inputWord2]
       this.state.inputWord1 = ''
@@ -49,10 +48,6 @@ module.exports = React.createFactory React.createClass
   componentDidMount: ->
     this.refs.inputWord1.getDOMNode().focus()
 
-
-  message: ->
-    if this.state.message
-      Dom.div {id: 'message'}, this.state.message
 
   stateInput: (name) ->
     Dom.input({
@@ -64,7 +59,6 @@ module.exports = React.createFactory React.createClass
 
   render: ->
     Dom.form {id: 'word-form'}, [
-      this.message(),
       Dom.input({
         id: 'form-name',
         ref: 'name',
