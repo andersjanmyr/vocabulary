@@ -42,6 +42,7 @@
     "react-tools": "*",
     "reactify": "*",
     "sinon": "^1.12.1",
+    "supertest": "^0.15.0",
     "uglify-js": "*",
     "watchify": "*"
   },

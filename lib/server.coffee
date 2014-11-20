@@ -1,12 +1,12 @@
+debug = require("debug")("vocabulary:server")
 express = require("express")
-http = require("http")
 path = require("path")
 logger = require("morgan")
 cookieParser = require("cookie-parser")
 bodyParser = require("body-parser")
-debug = require("debug")("vocabulary:server")
-wordlists = require('./word-lists')
-livereload = require('livereload')
+mongoskin = require('mongoskin')
+MongoWordlist = require('./models/mongo-wordlist')
+wordlistRoute = require('./routes/wordlist-route')
 
 app = express()
 
@@ -16,8 +16,15 @@ isDevelopment = ->
   process.env.NODE_ENV is 'development'
 
 if isDevelopment()
+  livereload = require('livereload')
   server = livereload.createServer()
   server.watch(staticDir)
+
+dbUrl = process.env['MONGOHQ_URL'] or 'mongodb://@localhost:27017/vocabulary-dev'
+console.log("Connecting to Mongo: #{dbUrl}")
+
+db = mongoskin.db(dbUrl, {safe:true})
+wordlist = new MongoWordlist(db)
 
 app.set('view engine', 'ejs')
 app.use logger("dev")
@@ -31,7 +38,7 @@ app.get "/status", (req, resp) ->
   debug "Status requested"
   resp.send "To be or not to be, that is the question"
 
-app.use "/wordlists", wordlists
+app.use "/wordlists", wordlistRoute(wordlist)
 
 
 module.exports = app
