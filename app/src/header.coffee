@@ -8,10 +8,9 @@ module.exports = React.createFactory React.createClass
         Dom.img { id: 'logo-image', src: '/images/victory-128.png'}
               Dom.h1 { id: 'logo-text'}, 'ocabulary'
       ],
-          Dom.div {id: 'login'}, [
-            Dom.div { id: 'email'}, null
-              Dom.div { id: 'password'}, null
-          ],
+      Dom.div {id: 'login'}, [
+        Dom.a {href: "/auth/google"}, 'Sign In with Google'
+      ],
 
     ]
 

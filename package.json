@@ -26,7 +26,9 @@
     "ejs": "^1.0.0",
     "express": "^4.0.0",
     "mongoskin": "^1.4.4",
-    "morgan": "*"
+    "morgan": "*",
+    "passport": "^0.2.1",
+    "passport-google": "^0.3.0"
   },
   "devDependencies": {
     "browserify": "*",
