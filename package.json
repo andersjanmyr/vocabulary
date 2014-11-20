@@ -23,8 +23,8 @@
     "coffee-script": "*",
     "cookie-parser": "*",
     "debug": "*",
+    "ejs": "^1.0.0",
     "express": "^4.0.0",
-    "livereload": "^0.3.4",
     "morgan": "*"
   },
   "devDependencies": {
@@ -34,6 +34,7 @@
     "jshint": "*",
     "less": "*",
     "literalify": "^0.3.0",
+    "livereload": "^0.3.4",
     "nodemon": "*",
     "react": "*",
     "react-tools": "*",
