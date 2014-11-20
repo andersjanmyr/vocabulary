@@ -15,7 +15,7 @@
     "start": "bin/server",
     "watch-server": "nodemon --watch lib --ext .coffee bin/server",
     "watch": "npm run watch-src & npm run watch-less & npm run watch-server",
-    "test": "mocha --reporter spec test",
+    "test": "mocha --recursive --compilers coffee:coffee-script/register --reporter spec test",
     "deploy": "./bin/deploy.sh"
   },
   "dependencies": {
@@ -25,10 +25,12 @@
     "debug": "*",
     "ejs": "^1.0.0",
     "express": "^4.0.0",
+    "mongoskin": "^1.4.4",
     "morgan": "*"
   },
   "devDependencies": {
     "browserify": "*",
+    "chai": "^1.10.0",
     "coffeeify": "*",
     "envify": "*",
     "jshint": "*",
@@ -39,6 +41,7 @@
     "react": "*",
     "react-tools": "*",
     "reactify": "*",
+    "sinon": "^1.12.1",
     "uglify-js": "*",
     "watchify": "*"
   },
