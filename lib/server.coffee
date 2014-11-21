@@ -9,7 +9,7 @@ cookieSession = require("cookie-session")
 bodyParser = require("body-parser")
 
 passport = require('passport')
-GoogleStrategy = require('passport-google').Strategy
+GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 
 mongoskin = require('mongoskin')
 wordlistRoute = require('./routes/wordlist-route')
@@ -25,9 +25,9 @@ isDevelopment = ->
 
 
 authConfig = {
-  returnURL: 'http://vocabulary.janmyr.com/auth/google/return'
-  realm: 'http://vocabulary.janmyr.com/'
-  stateless: true
+  clientID: '410656465057-aa81snbalq1pmr2fcl4jd0tce86j8k3q.apps.googleusercontent.com'
+  clientSecret: 'cjF0i7H6bLiXQ2cxjpD9nu77'
+  callbackURL: "http://vocabulary.janmyr.com/auth/google/callback"
 }
 
 if isDevelopment()
@@ -35,9 +35,9 @@ if isDevelopment()
   server = livereload.createServer()
   server.watch(staticDir)
   authConfig = {
-    returnURL: 'http://localhost:3000/auth/google/return'
-    realm: 'http://localhost:3000/'
-    stateless: true
+    clientID: '410656465057-61m92gbq68a189b89tub32p4r2orb362.apps.googleusercontent.com'
+    clientSecret: 'KoLwzX7auJIPznHYAJvIiwNt'
+    callbackURL: "http://localhost:3000/auth/google/callback"
   }
 
 dbUrl = process.env['MONGOHQ_URL'] or 'mongodb://@localhost:27017/vocabulary-dev'
@@ -57,26 +57,38 @@ app.use express.static(staticDir)
 app.use passport.initialize()
 app.use passport.session()
 
-strategy = new GoogleStrategy(authConfig, (identifier, profile, done) ->
-  debug('Logged in', identifier, profile)
-  user = {openId: identifier, displayName: profile.displayName, email: profile.emails[0].value}
-  users.findOrCreate user, (err, user) ->
-    debug('findOrCreate', user)
-    done(null, user))
+strategy = new GoogleStrategy(authConfig,
+  (accessToken, refreshToken, profile, done) ->
+    debug('Logged in', accessToken, refreshToken, profile)
+    user = {
+      provider: profile.provider
+      externalId: profile.id
+      displayName: profile.displayName
+      email: profile.emails[0].value
+      picture: profile._json.picture
+    }
+    users.findOrCreate user, (err, user) ->
+      debug('findOrCreate', user)
+      done(null, user))
 
 passport.serializeUser (user, done) ->
   debug('serializeUser', user)
-  done(null, user.openId)
+  done(null, user.externalId)
 
 passport.deserializeUser (identifier, done) ->
   debug('deserializeUser', identifier)
-  done(null, { openId: identifier})
+  done(null, { externalId: identifier})
 
 passport.use(strategy)
 
-app.get('/auth/google', passport.authenticate('google'))
+app.get('/auth/google', passport.authenticate('google', {
+  scope:
+    ['https://www.googleapis.com/auth/userinfo.profile'
+    'https://www.googleapis.com/auth/userinfo.email']
+  }
+))
 
-app.get('/auth/google/return',
+app.get('/auth/google/callback',
   passport.authenticate('google', {successRedirect: '/', failureRedirect: '/login'}))
 
 app.get '/logout', (req, res) ->
@@ -85,9 +97,9 @@ app.get '/logout', (req, res) ->
 
 app.get "/", (req, resp) ->
   debug('user', req.user)
-  openId = req.user && req.user.openId
-  users.findByOpenId openId, (err, user) ->
-    debug('findByOpenId', user)
+  externalId = req.user && req.user.externalId
+  users.findByExternalId externalId, (err, user) ->
+    debug('findByExternalId', user)
     resp.render('index', {
       isDevelopment: isDevelopment()
       user: util.inspect(_.omit(user, '_id'))

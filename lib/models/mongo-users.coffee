@@ -6,15 +6,15 @@ class MongoUsers
 
   findOrCreate: (user, callback) ->
     @users.findAndModify(
-      {openId: user.openId },
+      {externalId: user.externalId},
       null,
       {$set: user},
       { new: true, upsert: true },
       callback
     )
 
-  findByOpenId: (openId, callback) ->
-    @users.findOne {openId: openId}, (err, user) ->
+  findByExternalId: (externalId, callback) ->
+    @users.findOne {externalId: externalId}, (err, user) ->
       callback(err, user)
 
   reset: (callback) ->

@@ -9,9 +9,11 @@ db = mongoskin.db('mongodb://@localhost:27017/vocabulary-test', {safe:true});
 # Example lists
 seed =
   {
-    openId: 'https://and.id.com',
-    displayName: 'Tapir',
+    provider: 'google'
+    externalid: 'https://and.id.com'
+    displayName: 'Tapir'
     email: 'tapir@janmyr.com'
+    picture: 'http://fc09.deviantart.net/fs41/f/2009/030/2/7/tapir_avatar_by_gescheitert.png'
   }
 
 users = new Users(db, seed);
@@ -23,16 +25,16 @@ describe 'mongo-users', ->
 
   describe '#findOrCreate', ->
     it 'creates a new user', (done) ->
-      newUser = { openId: 'oid', displayName: 'Oid', email: 'oid@oid.com' }
+      newUser = { externalId: 'oid', displayName: 'Oid', email: 'oid@oid.com' }
       users.findOrCreate newUser, (err, user) ->
         expect(user.displayName).to.equal(newUser.displayName)
         expect(user.email).to.equal(newUser.email)
         done()
 
-  describe '#findByOpenId', ->
+  describe '#findByExternalId', ->
     it 'finds an existing user', (done) ->
-      users.findByOpenId seed.openId, (err, user) ->
-        console.log('user', user)
+      users.findByExternalId seed.externalId, (err, user) ->
+        expect(user.provider).to.equal('google')
         expect(user.displayName).to.equal('Tapir')
         expect(user.email).to.equal('tapir@janmyr.com')
         done()
