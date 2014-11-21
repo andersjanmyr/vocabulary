@@ -1,6 +1,6 @@
-debug = require('debug')('vocabulary:mongo-user')
+debug = require('debug')('vocabulary:mongo-users')
 
-class MongoUser
+class MongoUsers
   constructor: (@db, @seed) ->
     @users = db.collection('users')
 
@@ -24,4 +24,4 @@ class MongoUser
       users.insert seed, (err, data) ->
         callback(err)
 
-module.exports = MongoUser
+module.exports = MongoUsers

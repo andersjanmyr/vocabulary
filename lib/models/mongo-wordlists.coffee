@@ -1,7 +1,7 @@
-debug = require('debug')('vocabulary:mongo-wordlist')
+debug = require('debug')('vocabulary:mongo-wordlists')
 
 
-class MongoWordlist
+class MongoWordlists
   constructor: (@db, @seed) ->
     @wordlists = db.collection('wordlists')
 
@@ -50,4 +50,4 @@ class MongoWordlist
       wordlists.insert seed, (err, data) ->
         callback(err)
 
-module.exports = MongoWordlist
+module.exports = MongoWordlists

@@ -2,7 +2,7 @@ expect = require('chai').expect
 sinon = require('sinon')
 mongoskin = require('mongoskin')
 
-User = require('../../lib/models/mongo-user');
+Users = require('../../lib/models/mongo-users');
 
 db = mongoskin.db('mongodb://@localhost:27017/vocabulary-test', {safe:true});
 
@@ -14,9 +14,9 @@ seed =
     email: 'tapir@janmyr.com'
   }
 
-users = new User(db, seed);
+users = new Users(db, seed);
 
-describe 'mongo-user', ->
+describe 'mongo-users', ->
 
   before (done) ->
     users.reset(done)

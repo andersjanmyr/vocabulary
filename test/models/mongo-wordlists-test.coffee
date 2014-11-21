@@ -2,7 +2,7 @@ expect = require('chai').expect
 sinon = require('sinon')
 mongoskin = require('mongoskin')
 
-Wordlist = require('../../lib/models/mongo-wordlist');
+Wordlists = require('../../lib/models/mongo-wordlists');
 
 db = mongoskin.db('mongodb://@localhost:27017/vocabulary-test', {safe:true});
 
@@ -40,18 +40,18 @@ seed = [
   }
 ]
 
-wordlist = new Wordlist(db, seed);
+wordlists = new Wordlists(db, seed);
 
-describe 'mongo-wordlist', ->
+describe 'mongo-wordlists', ->
 
   before (done) ->
-    wordlist.reset(done)
+    wordlists.reset(done)
 
   describe '#find', ->
     it 'finds the matching wordlists', (done) ->
-      wordlist.find 'list', (err, wordlists) ->
-        expect(wordlists.length).to.equal(3)
-        expect(wordlists[0].name).to.match(/list/)
+      wordlists.find 'list', (err, lists) ->
+        expect(lists.length).to.equal(3)
+        expect(lists[0].name).to.match(/list/)
         done()
 
 
@@ -59,8 +59,8 @@ describe 'mongo-wordlist', ->
     original = null
 
     before (done) ->
-      wordlist.find null, (err, wordlists) ->
-        original = wordlists
+      wordlists.find null, (err, lists) ->
+        original = lists
         done()
 
     it 'adds the wordlist', (done) ->
@@ -75,9 +75,9 @@ describe 'mongo-wordlist', ->
           [ 'soffa', 'sofa']
         ]
       }
-      wordlist.add newlist, (err, id) ->
-        wordlist.find null, (err, wordlists) ->
-          expect(wordlists.length).to.equal(len + 1)
+      wordlists.add newlist, (err, id) ->
+        wordlists.find null, (err, lists) ->
+          expect(lists.length).to.equal(len + 1)
           done()
 
 
@@ -86,27 +86,27 @@ describe 'mongo-wordlist', ->
     awordlist = null
 
     before (done) ->
-      wordlist.find null, (err, wordlists) ->
-        original = wordlists
-        awordlist = wordlists[0]
+      wordlists.find null, (err, lists) ->
+        original = lists
+        awordlist = lists[0]
         done()
 
     it 'removes the wordlist by id', (done) ->
       len = original.length
-      wordlist.remove awordlist._id, (err) ->
-        wordlist.find null, (err, wordlists) ->
-          expect(wordlists.length).to.equal(len - 1)
+      wordlists.remove awordlist._id, (err) ->
+        wordlists.find null, (err, lists) ->
+          expect(lists.length).to.equal(len - 1)
           done()
 
     it 'removes the wordlist by wordlist', (done) ->
       len = original.length
-      wordlist.remove awordlist, (err) ->
-      wordlist.find null, (err, wordlists) ->
-        expect(wordlists.length).to.equal(len - 1)
+      wordlists.remove awordlist, (err) ->
+      wordlists.find null, (err, lists) ->
+        expect(lists.length).to.equal(len - 1)
         done()
 
     it 'calls back with error if wordlist missing', (done) ->
-      wordlist.remove {_id: 'missing'}, (err) ->
+      wordlists.remove {_id: 'missing'}, (err) ->
         expect(err).to.equal('wordlist not found, id: missing')
         done()
 
@@ -115,21 +115,21 @@ describe 'mongo-wordlist', ->
     awordlist = null
 
     before (done) ->
-      wordlist.find null, (err, wordlists) ->
-        original = wordlists
-        awordlist = wordlists[0]
+      wordlists.find null, (err, lists) ->
+        original = lists
+        awordlist = lists[0]
         done();
 
     it 'calls back with error if wordlist missing', (done) ->
-      wordlist.update {_id: 'missing'}, (err) ->
+      wordlists.update {_id: 'missing'}, (err) ->
         expect(err).to.equal('wordlist not found, id: missing')
         done()
 
     it 'updates the wordlist', (done) ->
       len = original.length
-      wordlist.update {_id: awordlist._id, name: 'Vocabulary rules!'}, (err) ->
-        wordlist.findById awordlist._id, (err, wordlist) ->
-          expect(wordlist.name).to.equal('Vocabulary rules!')
+      wordlists.update {_id: awordlist._id, name: 'Vocabulary rules!'}, (err) ->
+        wordlists.findById awordlist._id, (err, list) ->
+          expect(list.name).to.equal('Vocabulary rules!')
           done()
 
 

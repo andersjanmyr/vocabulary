@@ -11,8 +11,8 @@ GoogleStrategy = require('passport-google').Strategy
 
 mongoskin = require('mongoskin')
 wordlistRoute = require('./routes/wordlist-route')
-MongoWordlist = require('./models/mongo-wordlist')
-MongoUser = require('./models/mongo-user')
+MongoWordlists = require('./models/mongo-wordlists')
+MongoUsers = require('./models/mongo-users')
 
 app = express()
 
@@ -42,8 +42,8 @@ dbUrl = process.env['MONGOHQ_URL'] or 'mongodb://@localhost:27017/vocabulary-dev
 console.log("Connecting to Mongo: #{dbUrl}")
 
 db = mongoskin.db(dbUrl, {safe:true})
-wordlist = new MongoWordlist(db)
-users = new MongoUser(db)
+wordlists = new MongoWordlists(db)
+users = new MongoUsers(db)
 
 app.set('view engine', 'ejs')
 app.use logger("dev")
@@ -58,8 +58,8 @@ app.use passport.session()
 strategy = new GoogleStrategy(authConfig, (identifier, profile, done) ->
   debug('Logged in', identifier, profile)
   user = {openId: identifier, displayName: profile.displayName, email: profile.emails[0].value}
-  #users.findOrCreate user, ->
-  done(null, user))
+  users.findOrCreate user, (err, user) ->
+    done(null, user))
 
 passport.serializeUser (user, done) ->
   debug('serializeUser', user)
@@ -86,7 +86,7 @@ app.get "/status", (req, resp) ->
   debug "Status requested"
   resp.send "To be or not to be, that is the question"
 
-app.use "/wordlists", wordlistRoute(wordlist)
+app.use "/wordlists", wordlistRoute(wordlists)
 
 
 module.exports = app

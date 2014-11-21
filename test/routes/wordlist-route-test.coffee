@@ -5,11 +5,10 @@ express = require('express')
 bodyParser = require('body-parser')
 
 wordlistRouter = require('../../lib/routes/wordlist-route.coffee')
-WordList = require('../../lib/models/mongo-wordlist.coffee')
 
 app = express()
 app.use(bodyParser.json())
-wordlist = {
+wordlists = {
   find: sinon.mock().withArgs('fooled').yields(null, [{name: 'something'}])
   findById: sinon.mock().withArgs('geb').yields(null, {name: 'In London on vacation'})
   add: sinon.mock().withArgs({name: 'newlist'}).yields(null, 'ilv')
@@ -17,7 +16,7 @@ wordlist = {
   remove: sinon.mock().withArgs('fbr').yields(null, {name: 'Fakewordlist'})
 }
 
-app.use('/wordlists', wordlistRouter(wordlist))
+app.use('/wordlists', wordlistRouter(wordlists))
 
 describe 'GET /wordlists?filter=fooled', () ->
   it 'responds with matching wordlists', (done) ->
