@@ -1,6 +1,8 @@
 debug = require("debug")("vocabulary:server")
 express = require("express")
 path = require("path")
+util = require("util")
+_ = require("lodash")
 logger = require("morgan")
 cookieParser = require("cookie-parser")
 cookieSession = require("cookie-session")
@@ -59,6 +61,7 @@ strategy = new GoogleStrategy(authConfig, (identifier, profile, done) ->
   debug('Logged in', identifier, profile)
   user = {openId: identifier, displayName: profile.displayName, email: profile.emails[0].value}
   users.findOrCreate user, (err, user) ->
+    debug('findOrCreate', user)
     done(null, user))
 
 passport.serializeUser (user, done) ->
@@ -77,11 +80,14 @@ app.get('/auth/google/return',
   passport.authenticate('google', {successRedirect: '/', failureRedirect: '/login'}))
 
 app.get "/", (req, resp) ->
-  console.log('user', req.user)
-  resp.render('index', {
-    isDevelopment: isDevelopment()
-    user: req.user
-  })
+  debug('user', req.user)
+  users.findByOpenId req.user.openId, (err, user) ->
+    debug('findByOpenId', user)
+    resp.render('index', {
+      isDevelopment: isDevelopment()
+      user: util.inspect(_.omit(user, '_id'))
+    })
+
 app.get "/status", (req, resp) ->
   debug "Status requested"
   resp.send "To be or not to be, that is the question"
