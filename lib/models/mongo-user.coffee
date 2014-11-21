@@ -5,14 +5,13 @@ class MongoUser
     @users = db.collection('users')
 
   findOrCreate: (user, callback) ->
-    @users.findAndModify({
-      query: {openId: user.openId },
-      update: {
-        $setOnInsert: { openId: user.openId, displayName: user.displayName, email: user.email }
-      },
-      new: true
-      upsert: true
-    })
+    @users.findAndModify(
+      {openId: user.openId },
+      null,
+      {$set: user},
+      { new: true, upsert: true },
+      callback
+    )
 
   findById: (id, callback) ->
     @users.findOne {_id: id}, (err, wordlist) ->
