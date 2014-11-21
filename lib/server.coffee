@@ -79,9 +79,14 @@ app.get('/auth/google', passport.authenticate('google'))
 app.get('/auth/google/return',
   passport.authenticate('google', {successRedirect: '/', failureRedirect: '/login'}))
 
+app.get '/logout', (req, res) ->
+  req.logout()
+  res.redirect('/')
+
 app.get "/", (req, resp) ->
   debug('user', req.user)
-  users.findByOpenId req.user.openId, (err, user) ->
+  openId = req.user && req.user.openId
+  users.findByOpenId openId, (err, user) ->
     debug('findByOpenId', user)
     resp.render('index', {
       isDevelopment: isDevelopment()
