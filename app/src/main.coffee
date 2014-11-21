@@ -8,21 +8,22 @@ WordForm = require './word-form'
 
 React.initializeTouchEvents(true)
 
-wordList = {
-  name: 'A new demo list',
-  lang1: 'Swedish',
-  lang2: 'English',
+wordlist = {
+  name: 'A new demo list'
+  owner: 'anders@janmyr.com'
+  lang1: 'Swedish'
+  lang2: 'English'
   words: [
-    [ 'Fisk', 'Fisk'],
-    [ 'Katt', 'Cat'],
+    [ 'Fisk', 'Fisk']
+    [ 'Katt', 'Cat']
     [ 'Hund', 'Dog']
   ]
 }
 
-wordListPage = Page({
+wordlistPage = Page({
   pageClass: 'word-form',
-  content: WordForm({wordList: wordList})})
+  content: WordForm({wordlist: wordlist})})
 
-React.render(wordListPage, document.body);
+React.render(wordlistPage, document.body);
 
 

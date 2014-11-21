@@ -1,6 +1,6 @@
 React = require 'react'
 
-WordList = require './word-list'
+Wordlist = require './wordlist'
 MessagePanel = require './message-panel'
 
 Dom = React.DOM
@@ -10,7 +10,7 @@ module.exports = React.createFactory React.createClass
     {
       inputWord1: null,
       inputWord2: null,
-      wordList: $.extend(true, {}, this.props.wordList)
+      wordlist: $.extend(true, {}, this.props.wordlist)
     }
 
   languages: [ 'Swedish', 'English', 'Spanish']
@@ -18,11 +18,10 @@ module.exports = React.createFactory React.createClass
     this.languages.map (lang) ->
       Dom.option {key: lang, value: lang}, lang
 
-  onClick: (e) ->
-    console.log this.state.wordList
+  addClicked: (e) ->
     e.preventDefault()
     state = this.state
-    words = this.state.wordList.words
+    words = this.state.wordlist.words
     exists1 = words.some (pair) ->
       return true if pair[0] is state.inputWord1
     exists2 = words.some (pair) ->
@@ -45,6 +44,15 @@ module.exports = React.createFactory React.createClass
       this.state.inputWord2 = ''
     this.setState(this.state)
 
+  saveClicked: (e) ->
+    console.log this.state.wordlist
+    e.preventDefault()
+    MessagePanel.showError("You can't save someone else's wordlist, owned by:
+      #{this.state.wordlist.owner}")
+
+  cancelClicked: (e) ->
+    e.preventDefault()
+
   componentDidMount: ->
     this.refs.inputWord1.getDOMNode().focus()
 
@@ -56,6 +64,17 @@ module.exports = React.createFactory React.createClass
       valueLink: this.linkState(name)
     })
 
+  langSelect: (name) ->
+    Dom.select({
+      ref: name
+      value: this.state.wordlist[name]
+      onChange: =>
+        this.state.wordlist[name] = this.refs[name].getDOMNode().value
+        this.setState(this.state)
+      },
+      this.languageOptions()
+    )
+
 
   render: ->
     Dom.form {id: 'word-form'}, [
@@ -63,22 +82,24 @@ module.exports = React.createFactory React.createClass
         id: 'form-name',
         ref: 'name',
         placeholder: 'Book, chapter, ...'
-        value: this.state.wordList.name,
+        value: this.state.wordlist.name,
         onChange: =>
-          this.state.wordList.name = this.refs.name.getDOMNode().value
+          this.state.wordlist.name = this.refs.name.getDOMNode().value
           this.setState(this.state)
       }),
       Dom.div({ id: 'languages' }, [
-        Dom.select({ id: 'lang1', valueLink: this.linkState('lang1')},
-          this.languageOptions())
-        Dom.select({ id: 'lang2', valueLink: this.linkState('lang2')},
-          this.languageOptions())
+        this.langSelect('lang1')
+        this.langSelect('lang2')
       ]),
-      WordList({words: this.state.wordList.words}),
+      Wordlist({words: this.state.wordlist.words}),
       Dom.div({ id: 'inputs' }, [
         this.stateInput('inputWord1'),
         this.stateInput('inputWord2'),
-        Dom.button({ref: 'addButton', onClick: this.onClick}, 'Add words')
+        Dom.button({ref: 'addButton', onClick: this.addClicked}, 'Add words')
       ])
+      Dom.div { id: 'save-panel' }, [
+        Dom.button({ref: 'saveButton', onClick: this.saveClicked}, 'Save wordlist')
+        Dom.button({ref: 'cancelButton', onClick: this.cancelClicked}, 'Cancel')
+      ]
     ]
 
