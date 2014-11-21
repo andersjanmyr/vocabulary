@@ -99,7 +99,7 @@ app.get "/", (req, resp) ->
   debug('user', req.user)
   externalId = req.user && req.user.externalId
   users.findByExternalId externalId, (err, user) ->
-    debug('findByExternalId', user)
+    debug('findByExternalId', err, user)
     resp.render('index', {
       isDevelopment: isDevelopment()
       user: util.inspect(_.omit(user, '_id'))

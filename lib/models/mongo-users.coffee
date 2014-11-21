@@ -14,6 +14,7 @@ class MongoUsers
     )
 
   findByExternalId: (externalId, callback) ->
+    process.nextTick(callback.bind(null, 'Missing externalId')) unless externalId
     @users.findOne {externalId: externalId}, (err, user) ->
       callback(err, user)
 
