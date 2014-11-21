@@ -14,7 +14,8 @@ router.get '/:id', (req, res) ->
 router.post '/', (req, res) ->
   wordlist.add req.body, (err, id) ->
     return res.status(500).send(err) if err
-    res.status(201).json(id)
+    console.log('id', id)
+    res.status(201).send(id)
 
 router.put '/:id', (req, res) ->
   req.body.id = req.param('id')

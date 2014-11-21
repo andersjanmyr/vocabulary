@@ -109,7 +109,7 @@ app.get "/status", (req, resp) ->
   debug "Status requested"
   resp.send "To be or not to be, that is the question"
 
-app.use "/wordlists", wordlistRoute(wordlists)
+app.use "/api/wordlists", wordlistRoute(wordlists)
 
 
 module.exports = app

@@ -2,6 +2,9 @@ React = require 'react'
 
 Wordlist = require './wordlist'
 MessagePanel = require './message-panel'
+Auth = require './auth'
+Router = require './router'
+Service = require './service'
 
 Dom = React.DOM
 module.exports = React.createFactory React.createClass
@@ -47,11 +50,18 @@ module.exports = React.createFactory React.createClass
   saveClicked: (e) ->
     console.log this.state.wordlist
     e.preventDefault()
-    MessagePanel.showError("You can't save someone else's wordlist, owned by:
-      #{this.state.wordlist.owner}")
+    if Auth.ownedByCurrentUser(this.state.wordlist.owner)
+      Service.saveWordlist this.state.wordlist, (err, wordlist) ->
+        console.log(err, wordlist)
+        return MessagePanel.showError("Cannot save wordlist, #{err}") if err
+        Router.go('/wordlists')
+    else
+      MessagePanel.showError("You can't save someone else's wordlist, owned by:
+        #{this.state.wordlist.owner}")
 
   cancelClicked: (e) ->
     e.preventDefault()
+    Router.wordlists()
 
   componentDidMount: ->
     this.refs.inputWord1.getDOMNode().focus()

@@ -5,6 +5,8 @@ React = require 'react'
 app = {}
 Page = require './page'
 WordForm = require './word-form'
+Wordlists = require './wordlists'
+Router = require './router'
 
 React.initializeTouchEvents(true)
 
@@ -20,10 +22,24 @@ wordlist = {
   ]
 }
 
-wordlistPage = Page({
+wordFormPage = Page({
   pageClass: 'word-form',
-  content: WordForm({wordlist: wordlist})})
+  content: WordForm({wordlist: wordlist})
+})
 
-React.render(wordlistPage, document.body);
+wordlistsPage = Page({
+  pageClass: 'word-lists',
+  content: Wordlists()
+})
+
+Router.addRoute '/', ->
+  React.render(wordFormPage, document.body)
+
+Router.addRoute '/wordlists', ->
+  React.render(wordlistsPage, document.body)
+
+Router.start()
+
+Router.go('/', 'Vocabulary')
 
 

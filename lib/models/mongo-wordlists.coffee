@@ -23,9 +23,9 @@ class MongoWordlists
 
 
   add: (wordlist, callback) ->
-    @wordlists.insert wordlist, (err, addedwordlist) ->
-      debug(addedwordlist)
-      callback(err, addedwordlist._id)
+    @wordlists.insert wordlist, (err, addedLists) ->
+      debug(addedLists)
+      callback(err, addedLists[0]._id)
 
   update: (wordlist, callback) ->
     wordlists = @wordlists

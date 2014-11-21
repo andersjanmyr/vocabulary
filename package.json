@@ -51,6 +51,7 @@
     "watchify": "*"
   },
   "literalify": {
-    "react": "window.React"
+    "react": "window.React",
+    "jquery": "window.$"
   }
 }
