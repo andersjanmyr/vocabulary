@@ -23,12 +23,19 @@ describe 'mongo-users', ->
 
   describe '#findOrCreate', ->
     it 'creates a new user', (done) ->
-      users.findOrCreate seed, (err, user) ->
+      newUser = { openId: 'oid', displayName: 'Oid', email: 'oid@oid.com' }
+      users.findOrCreate newUser, (err, user) ->
+        expect(user.displayName).to.equal(newUser.displayName)
+        expect(user.email).to.equal(newUser.email)
+        done()
+
+  describe '#findByOpenId', ->
+    it 'finds an existing user', (done) ->
+      users.findByOpenId seed.openId, (err, user) ->
         console.log('user', user)
         expect(user.displayName).to.equal('Tapir')
         expect(user.email).to.equal('tapir@janmyr.com')
         done()
-
 
 
 

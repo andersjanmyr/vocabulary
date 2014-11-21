@@ -13,9 +13,9 @@ class MongoUsers
       callback
     )
 
-  findById: (id, callback) ->
-    @users.findOne {_id: id}, (err, wordlist) ->
-      callback(err, wordlist)
+  findByOpenId: (openId, callback) ->
+    @users.findOne {openId: openId}, (err, user) ->
+      callback(err, user)
 
   reset: (callback) ->
     users = @users;
