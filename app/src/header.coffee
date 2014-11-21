@@ -7,8 +7,11 @@ LoginPanel = React.createFactory React.createClass
   renderLinks: ->
     if window.user && window.user.email
       Dom.div {id: 'user-panel'}, [
-        Dom.span {id: 'user-name'}, "#{user.displayName} (#{user.email}) "
-        Dom.a {href: "/logout"}, 'Logout'
+        Dom.img {id: 'user-picture', src: user.picture, width: '48', height: '48'}
+        Dom.div {}, [
+          Dom.div {id: 'user-name'}, "#{user.displayName} (#{user.email})"
+          Dom.div {}, Dom.a {href: "/logout"}, 'Logout'
+        ]
       ]
     else
       Dom.a {href: "/auth/google"}, 'Sign In with Google'
