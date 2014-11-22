@@ -69,7 +69,7 @@ module.exports = React.createFactory React.createClass
 
   cancelClicked: (e) ->
     e.preventDefault()
-    Router.wordlists()
+    Router.go('/wordlists')
 
   componentDidMount: ->
     this.refs.inputWord1.getDOMNode().focus()

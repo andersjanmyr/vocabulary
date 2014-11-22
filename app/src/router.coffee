@@ -23,6 +23,7 @@ go = (url) ->
   console.log {title, callback, args}
   callback(args)
   history.pushState(args, title, url)
+  document.title = title
 
 addRoute = (url, title, callback) ->
   routes.push { url: url, route: parse(url), title: title, callback: callback}
