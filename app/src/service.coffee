@@ -1,13 +1,14 @@
 $ = require('jquery')
 
 Service = {
-  saveWordlist: (wordlist, callback) ->
+
+  saveWordlist: (list, callback) ->
     $.ajax({
-      type: 'POST'
+      type: if list._id then 'PUT' else 'POST'
       contentType: 'application/json'
       dataType: 'json'
-      url: '/api/wordlists'
-      data: JSON.stringify(wordlist)
+      url: if list._id then "/api/wordlists/#{list._id}" else '/api/wordlists'
+      data: JSON.stringify(list)
       success: callback.bind(null, null)
     })
 
