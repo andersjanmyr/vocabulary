@@ -1,5 +1,6 @@
 React = require 'react'
 Service = require './service'
+Auth = require './auth'
 
 Dom = React.DOM
 
@@ -10,8 +11,8 @@ Wordlists = React.createFactory React.createClass
       Dom.span {className: 'name'}, item.name
       Dom.span {className: 'amount'}, "(#{item.words.length} words)"
       Dom.div {className: 'owner'}, item.owner
-      Dom.a {href: "/wordform/#{item._id}"}, 'Edit'
-      Dom.a {href: "/wordlists/#{item._id}/delete", className: 'delete'}, 'Delete'
+      Dom.a {href: "/wordform/#{item._id}"}, 'Edit' if Auth.ownedByCurrentUser(item.owner)
+      Dom.a {href: "/wordlists/#{item._id}/delete", className: 'delete'}, 'Delete' if Auth.ownedByCurrentUser(item.owner)
       Dom.a {href: "/quiz/#{item._id}"}, 'Quiz'
     ]
 

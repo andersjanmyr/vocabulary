@@ -17,6 +17,12 @@ wordFormPage = (list) ->
 wordlistsPage = (lists) ->
   Page({ pageClass: 'word-lists', content: Wordlists(wordlists: lists)})
 
+Router.addRoute '/auth/google', 'Signin', (params) ->
+  window.location = '/auth/google'
+
+Router.addRoute '/logout', 'Logout', (params) ->
+  window.location = '/logout'
+
 Router.addRoute '/', 'Wordlist', (params) ->
   Service.getWordlists params.filter, (err, lists) ->
     React.render(wordlistsPage(lists), document.body)
