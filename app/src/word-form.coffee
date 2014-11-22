@@ -6,6 +6,14 @@ Auth = require './auth'
 Router = require './router'
 Service = require './service'
 
+emptyList = {
+  name: "New list"
+  owner: Auth.owner
+  lang1: "Swedish"
+  lang2: "English"
+  words: []
+}
+
 Dom = React.DOM
 module.exports = React.createFactory React.createClass
   mixins: [React.addons.LinkedStateMixin]
@@ -13,7 +21,7 @@ module.exports = React.createFactory React.createClass
     {
       inputWord1: null,
       inputWord2: null,
-      wordlist: $.extend(true, {}, this.props.wordlist)
+      wordlist: $.extend(true, {}, this.props.wordlist or emptyList)
     }
 
   languages: [ 'Swedish', 'English', 'Spanish']

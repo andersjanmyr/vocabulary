@@ -1,5 +1,10 @@
 $ = require('jquery')
 
+MessagePanel = require './message-panel'
+$(document).ajaxError (event, jqxhr, settings, thrownError) ->
+  console.log(event, jqxhr, settings, thrownError)
+  MessagePanel.showError("#{event} - #{thrownError}")
+
 Service = {
 
   saveWordlist: (list, callback) ->

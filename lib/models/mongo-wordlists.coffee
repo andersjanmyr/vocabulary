@@ -25,15 +25,17 @@ class MongoWordlists
 
   add: (wordlist, callback) ->
     debug('add', wordlist)
-    @wordlists.insert wordlist, (err, newList) ->
-      callback(err, newList && newList._id)
+    @wordlists.insert wordlist, (err, addedLists) ->
+      debug('add', addedLists)
+      callback(err, addedLists[0]._id)
 
   update: (wordlist, callback) ->
     wordlists = @wordlists
     id = wordlist._id
+    delete(wordlist._id)
     @findById id, (err, found) ->
       return callback('wordlist not found, id: ' + id) unless found
-      wordlists.update {_id: wordlist._id}, wordlist, (err) ->
+      wordlists.updateById id, wordlist, (err) ->
         callback(err, wordlist)
 
   remove: (wordlistOrId, callback) ->
