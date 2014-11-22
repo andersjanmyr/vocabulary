@@ -1,7 +1,9 @@
 $ = require('jquery')
 parse = require('route-parser')
 
-console.log(parse)
+window.onpopstate = (event) ->
+  console.log(event)
+  go(event.state.url, true)
 
 routes = []
 
@@ -17,12 +19,12 @@ findRoute = (urlWithParams) ->
 
   throw Error("No matching Route for: #{urlWithParams}")
 
-go = (url) ->
+go = (url, isBack) ->
   console.log(url)
   {title, callback, args} = findRoute(url)
   console.log {title, callback, args}
   callback(args)
-  history.pushState(args, title, url)
+  history.pushState({url: url, args: args}, title, url) unless isBack
   document.title = title
 
 addRoute = (url, title, callback) ->
