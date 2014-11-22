@@ -8,9 +8,10 @@ Wordlists = React.createFactory React.createClass
   renderItem: (item) ->
     Dom.li {key: item._id}, [
       Dom.span {className: 'name'}, item.name
-      Dom.span {className: 'owner'}, item.owner
       Dom.span {className: 'amount'}, "(#{item.words.length} words)"
+      Dom.div {className: 'owner'}, item.owner
       Dom.a {href: "/wordform/#{item._id}"}, 'Edit'
+      Dom.a {href: "/wordlists/#{item._id}/delete", className: 'delete'}, 'Delete'
       Dom.a {href: "/quiz/#{item._id}"}, 'Quiz'
     ]
 

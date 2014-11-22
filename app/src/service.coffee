@@ -33,7 +33,16 @@ Service = {
       dataType: 'json'
       url: "/api/wordlists/#{id}"
       success: callback.bind(null, null)
-    });
+    })
+
+  deleteWordlist: (id, callback) ->
+    $.ajax({
+      type: 'DELETE'
+      contentType: 'application/json'
+      dataType: 'json'
+      url: "/api/wordlists/#{id}"
+      success: callback.bind(null, null)
+    })
 }
 
 module.exports = Service

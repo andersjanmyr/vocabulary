@@ -17,6 +17,14 @@ wordFormPage = (list) ->
 wordlistsPage = (lists) ->
   Page({ pageClass: 'word-lists', content: Wordlists(wordlists: lists)})
 
+Router.addRoute '/', 'Wordlist', (params) ->
+  Service.getWordlists params.filter, (err, lists) ->
+    React.render(wordlistsPage(lists), document.body)
+
+Router.addRoute '/wordlists', 'Wordlist', (params) ->
+  Service.getWordlists params.filter, (err, lists) ->
+    React.render(wordlistsPage(lists), document.body)
+
 Router.addRoute '/wordform/(:id)', 'Wordform', (params) ->
   console.log('params', params)
   if params.id
@@ -26,14 +34,14 @@ Router.addRoute '/wordform/(:id)', 'Wordform', (params) ->
   else
     React.render(wordFormPage(), document.body)
 
-Router.addRoute '/', 'Wordlist', (params) ->
-  Service.getWordlists params.filter, (err, lists) ->
-    React.render(wordlistsPage(lists), document.body)
-
-Router.addRoute '/wordlists', 'Wordlist', (params) ->
-  Service.getWordlists params.filter, (err, lists) ->
-    React.render(wordlistsPage(lists), document.body)
-
+Router.addRoute '/wordlists/:id/delete', 'Wordlist delete', (params) ->
+  console.log('params', params)
+  if params.id
+    Service.deleteWordlist params.id, (err, list) ->
+      console.log('delete', err, list)
+      Router.go('/wordlists')
+  else
+    React.render(wordFormPage(), document.body)
 Router.start()
 
 Router.go('/')

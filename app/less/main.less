@@ -75,7 +75,7 @@ header {
 
 #content {
   clear: both;
-  margin-left: 80px;
+  margin: 0 80px;
 }
 
 
@@ -165,7 +165,25 @@ a, a:visited {
   margin-left: 8px;
 }
 
-#wordlists li * {
-  margin: 5px;
-}
+#wordlists li {
+  list-style-type: none;
+  padding: 8px;
 
+  &:nth-child(2n+1) {
+    background: #eee;
+  }
+  &:nth-child(2n) {
+    background: lightgreen;
+  }
+  * {
+    margin: 5px;
+  }
+  .name {
+    font-size: 18pt;
+  }
+  a {
+    display: block;
+    margin-top: -20px;
+    float: right;
+  }
+}

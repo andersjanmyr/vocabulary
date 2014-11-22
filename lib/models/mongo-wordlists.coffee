@@ -43,7 +43,7 @@ class MongoWordlists
     id = wordlistOrId._id or wordlistOrId
     @findById id, (err, wordlist) ->
       return callback('wordlist not found, id: ' + id) unless wordlist
-      wordlists.remove {_id: id}, (err) ->
+      wordlists.removeById id, (err) ->
         callback(err, wordlist)
 
   reset: (callback) ->
