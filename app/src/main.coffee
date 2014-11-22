@@ -7,6 +7,7 @@ Page = require './page'
 WordForm = require './word-form'
 Wordlists = require './wordlists'
 Router = require './router'
+Service = require './service'
 
 React.initializeTouchEvents(true)
 
@@ -22,24 +23,24 @@ wordlist = {
   ]
 }
 
-wordFormPage = Page({
-  pageClass: 'word-form',
-  content: WordForm({wordlist: wordlist})
-})
+wordFormPage = (list) ->
+  Page({ pageClass: 'word-form', content: WordForm({wordlist: list}) })
 
-wordlistsPage = Page({
-  pageClass: 'word-lists',
-  content: Wordlists()
-})
+wordlistsPage = (lists) ->
+  Page({ pageClass: 'word-lists', content: Wordlists(wordlists: lists)})
 
-Router.addRoute '/', ->
-  React.render(wordFormPage, document.body)
+Router.addRoute '/wordform/:id', 'Wordform', (params) ->
+  console.log('params', params)
+  Service.getWordlist params.id, (err, list) ->
+    console.log('list', err, list)
+    React.render(wordFormPage(list), document.body)
 
-Router.addRoute '/wordlists', ->
-  React.render(wordlistsPage, document.body)
+Router.addRoute '/', 'Wordlist', (filter) ->
+  Service.getWordlists filter, (err, lists) ->
+    React.render(wordlistsPage(lists), document.body)
 
 Router.start()
 
-Router.go('/', 'Vocabulary')
+Router.go('/')
 
 

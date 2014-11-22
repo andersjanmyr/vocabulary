@@ -45,6 +45,7 @@
     "react": "*",
     "react-tools": "*",
     "reactify": "*",
+    "route-parser": "0.0.2",
     "sinon": "^1.12.1",
     "supertest": "^0.15.0",
     "uglify-js": "*",

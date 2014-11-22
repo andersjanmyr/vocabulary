@@ -13,7 +13,7 @@ router.get '/:id', (req, res) ->
 
 router.post '/', (req, res) ->
   wordlist.add req.body, (err, id) ->
-    return res.status(500).send(err) if err
+    return res.status(409).send(err) if err
     console.log('id', id)
     res.status(201).send(id)
 

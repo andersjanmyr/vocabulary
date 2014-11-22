@@ -18,14 +18,15 @@ class MongoWordlists
         callback(err, wordlists)
 
   findById: (id, callback) ->
-    @wordlists.findOne {_id: id}, (err, wordlist) ->
+    @wordlists.findById id, (err, wordlist) ->
+      debug('findById', err, wordlist)
       callback(err, wordlist)
 
 
   add: (wordlist, callback) ->
-    @wordlists.insert wordlist, (err, addedLists) ->
-      debug(addedLists)
-      callback(err, addedLists[0]._id)
+    debug('add', wordlist)
+    @wordlists.insert wordlist, (err, newList) ->
+      callback(err, newList && newList._id)
 
   update: (wordlist, callback) ->
     wordlists = @wordlists

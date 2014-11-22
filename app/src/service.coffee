@@ -11,15 +11,23 @@ Service = {
       success: callback.bind(null, null)
     })
 
-  getWordlists: (callback) ->
+  getWordlists: (filter, callback) ->
     $.ajax({
       type: 'GET'
       contentType: 'application/json'
       dataType: 'json'
-      url: '/api/wordlists'
+      url: "/api/wordlists?filter=#{filter or ''}"
+      success: callback.bind(null, null)
+    })
+
+  getWordlist: (id, callback) ->
+    $.ajax({
+      type: 'GET'
+      contentType: 'application/json'
+      dataType: 'json'
+      url: "/api/wordlists/#{id}"
       success: callback.bind(null, null)
     });
-
 }
 
 module.exports = Service
