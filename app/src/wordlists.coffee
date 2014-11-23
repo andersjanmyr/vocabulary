@@ -21,7 +21,11 @@ Wordlists = React.createFactory React.createClass
     console.log this.props
     self = this
     Dom.div {id: 'wordlists'}, [
-      Dom.a {href: "/wordform/"}, 'New'
+      if Auth.currentUser
+        Dom.a {href: "/wordform/"}, 'New wordlist'
+      else
+        [Dom.a({href: "/auth/google"}, 'Login')
+        ' to create a new wordlist']
       Dom.ul {id: 'wordlists'}, this.props.wordlists.map (item) ->
         console.log(item.name)
         self.renderItem item
