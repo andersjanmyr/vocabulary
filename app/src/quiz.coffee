@@ -8,20 +8,47 @@ Service = require './service'
 Dom = React.DOM
 
 QuizPanel = React.createFactory React.createClass
+  getInitialState: ->
+    {
+      correct: ''
+      feedbackClass: ''
+      feedbackIcon: ''
+    }
+
   render: ->
-    Dom.form {id: 'quiz-panel'}, [
+    Dom.form {id: 'quiz-panel', onSubmit: this.onSubmit}, [
       Dom.div {id: 'quiz-word-panel'}, [
         Dom.div({id: 'quiz-word'},  this.props.pair[0])
         Dom.input({id: 'quiz-reply', type: 'text', ref: 'reply'})
       ]
       Dom.div({id: 'quiz-feedback'}, [
-        Dom.div({id: 'quiz-feedback-word'}, 'Pending word')
-        Dom.div({id: 'quiz-feedback-icon'}, 'Pending icon')
+        Dom.div({id: 'quiz-feedback-word', className: this.state.feedbackClass},
+          this.state.correct)
+        Dom.div({id: 'quiz-feedback-icon', className: this.state.feedbackClass},
+          this.state.feedbackIcon)
       ])
     ]
 
   componentDidMount: ->
     this.refs.reply.getDOMNode().focus()
+
+  onSubmit: (e) ->
+    e.preventDefault()
+    value = this.refs.reply.getDOMNode().value
+    correct = this.props.pair[1]
+    this.state.correct = correct
+    if value is correct
+      this.state.feedbackClass = 'correct'
+      this.state.feedbackIcon = ':D'
+    else if value.toLowerCase() is correct.toLowerCase()
+      this.state.feedbackClass = 'wrong-case'
+      this.state.feedbackIcon = ':/'
+    else
+      this.state.feedbackClass = 'wrong'
+      this.state.feedbackIcon = ':('
+    this.setState(this.state)
+
+
 
 
 module.exports = React.createFactory React.createClass
