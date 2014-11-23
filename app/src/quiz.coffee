@@ -1,5 +1,6 @@
 React = require 'react'
 
+_ = require('lodash')
 MessagePanel = require './message-panel'
 Auth = require './auth'
 Router = require './router'
@@ -7,12 +8,19 @@ Service = require './service'
 
 Dom = React.DOM
 
+DonePanel = React.createFactory React.createClass
+  render: ->
+    Dom.div {id: 'done-panel'}, [
+      'Done'
+    ]
+
 QuizPanel = React.createFactory React.createClass
   getInitialState: ->
     {
       correct: ''
       feedbackClass: ''
       feedbackIcon: ''
+      timeout: 1500
     }
 
   render: ->
@@ -47,15 +55,26 @@ QuizPanel = React.createFactory React.createClass
       this.state.feedbackClass = 'wrong'
       this.state.feedbackIcon = ':('
     this.setState(this.state)
+    setTimeout(this.resultEntered.bind(this, this.state.feedbackClass), this.state.timeout)
 
-
+  resultEntered: (result) ->
+    this.refs.reply.getDOMNode().value = ''
+    this.refs.reply.getDOMNode().focus()
+    this.state.correct = ''
+    this.state.feedbackClass = ''
+    this.state.feedbackIcon = ''
+    this.props.replyEntered(result)
 
 
 module.exports = React.createFactory React.createClass
   getInitialState: ->
     {
-      words: $.extend(true, {}, this.props.wordlist.words)
-      replies: []
+      words: _.shuffle(this.props.wordlist.words)
+      stats: {
+        'wrong': 0
+        'wrong-case': 0
+        'correct': 0
+      }
       currentIndex: 0
     }
 
@@ -68,10 +87,14 @@ module.exports = React.createFactory React.createClass
   currentPair: ->
     this.state.words[this.state.currentIndex]
 
-  replyEntered: (reply) ->
-    this.state.replies.push(reply)
-    this.state.words.push(this.currentPair()) if this.currentPair()[1] isnt reply
+  replyEntered: (result) ->
+    this.state.stats[result]++
+    this.state.words.push(this.currentPair()) if result isnt 'correct'
+    this.state.currentIndex++
+    this.setState(this.state)
 
+  done: ->
+    this.state.currentIndex >= this.state.words.length
 
   render: ->
     Dom.div {id: 'quiz'}, [
@@ -79,9 +102,12 @@ module.exports = React.createFactory React.createClass
       Dom.span({className: 'lang'}, this.props.wordlist.lang1),
       ' to ',
       Dom.span({className: 'lang'}, this.props.wordlist.lang2),
-      QuizPanel({
-        pair: this.currentPair(),
-        replyEntered: this.replyEntered
-      })
+      if this.done()
+        DonePanel()
+      else
+        QuizPanel({
+          pair: this.currentPair(),
+          replyEntered: this.replyEntered
+        })
     ]
 

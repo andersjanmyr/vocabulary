@@ -24,10 +24,11 @@ LoginPanel = React.createFactory React.createClass
 module.exports = React.createFactory React.createClass
   render: ->
     Dom.div {id: 'header'}, [
-      Dom.div {id: 'logo'}, [
-        Dom.img { id: 'logo-image', src: '/images/victory-128.png'}
-              Dom.h1 { id: 'logo-text'}, 'ocabulary'
-      ],
+      Dom.a {href: "/", className: 'ilink'},
+        Dom.div {id: 'logo'}, [
+          Dom.img { id: 'logo-image', src: '/images/victory-128.png'}
+                Dom.h1 { id: 'logo-text'}, 'ocabulary'
+        ],
       LoginPanel()
     ]
 
