@@ -95,7 +95,7 @@ app.get '/logout', (req, res) ->
   req.logout()
   res.redirect('/')
 
-app.get "/", (req, resp) ->
+renderIndex = (req, resp) ->
   debug('user', req.user)
   externalId = req.user && req.user.externalId
   users.findByExternalId externalId, (err, user) ->
@@ -104,6 +104,11 @@ app.get "/", (req, resp) ->
       isDevelopment: isDevelopment()
       user: util.inspect(_.omit(user, '_id'))
     })
+ 
+app.get "/", renderIndex
+app.get "/wordlists/*", renderIndex
+app.get "/wordform/*", renderIndex
+app.get "/quiz/*", renderIndex
 
 app.get "/status", (req, resp) ->
   debug "Status requested"
