@@ -21,6 +21,7 @@ QuizPanel = React.createFactory React.createClass
       feedbackClass: ''
       feedbackIcon: ''
       timeout: 1500
+      errorTimeout: 3000
     }
 
   render: ->
@@ -34,6 +35,11 @@ QuizPanel = React.createFactory React.createClass
           this.state.correct)
         Dom.div({id: 'quiz-feedback-icon', className: this.state.feedbackClass},
           this.state.feedbackIcon)
+      ]
+      Dom.div {id: 'quiz-count-panel'}, [
+        Dom.span({id: 'quiz-current'},  this.props.current)
+        ' / '
+        Dom.span({id: 'quiz-count'},  this.props.count)
       ])
     ]
 
@@ -55,7 +61,8 @@ QuizPanel = React.createFactory React.createClass
       this.state.feedbackClass = 'wrong'
       this.state.feedbackIcon = ':('
     this.setState(this.state)
-    setTimeout(this.resultEntered.bind(this, this.state.feedbackClass), this.state.timeout)
+    timeout = if value is correct then this.state.timeout else this.state.errorTimeout
+    setTimeout(this.resultEntered.bind(this, this.state.feedbackClass), timeout)
 
   resultEntered: (result) ->
     this.refs.reply.getDOMNode().value = ''
@@ -107,6 +114,8 @@ module.exports = React.createFactory React.createClass
       else
         QuizPanel({
           pair: this.currentPair(),
+          count: this.state.words.length,
+          current: this.state.currentIndex+1,
           replyEntered: this.replyEntered
         })
     ]
