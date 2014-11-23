@@ -12,3 +12,4 @@ fi
 git push heroku deploy:master
 git checkout master
 git stash pop
+npm run build-less
