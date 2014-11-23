@@ -6,10 +6,14 @@ app = {}
 Page = require './page'
 WordForm = require './word-form'
 Wordlists = require './wordlists'
+Quiz = require './quiz'
 Router = require './router'
 Service = require './service'
 
 React.initializeTouchEvents(true)
+
+quizPage = (list) ->
+  Page({ pageClass: 'quiz', content: Quiz({wordlist: list}) })
 
 wordFormPage = (list) ->
   Page({ pageClass: 'word-form', content: WordForm({wordlist: list}) })
@@ -42,6 +46,13 @@ Router.addRoute '/wordlists/:id/delete', 'Wordlist delete', (params) ->
       Router.go('/wordlists')
   else
     React.render(wordFormPage(), document.body)
+
+Router.addRoute '/quiz/:id', 'Quiz', (params) ->
+  console.log('params', params)
+  Service.getWordlist params.id, (err, list) ->
+    console.log('list', err, list)
+    React.render(quizPage(list), document.body)
+
 Router.start()
 
 Router.go('/')
