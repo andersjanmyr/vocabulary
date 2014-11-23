@@ -8,7 +8,7 @@ Service = require './service'
 
 emptyList = {
   name: "New list"
-  owner: Auth.owner
+  owner: Auth.currentUser
   lang1: "Swedish"
   lang2: "English"
   words: []

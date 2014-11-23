@@ -4,7 +4,7 @@ Auth = {
   ownedByCurrentUser: (email) ->
     window.user.email is email
 
-  owner: window.user.email
+  currentUser: window.user and window.user.email
 }
 
 
