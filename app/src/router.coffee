@@ -31,7 +31,7 @@ addRoute = (url, title, callback) ->
   routes.push { url: url, route: parse(url), title: title, callback: callback}
 
 start = ->
-  $('body').on 'click', 'a', (e) ->
+  $('body').on 'click', 'a.ilink', (e) ->
     e.preventDefault()
     console.log(e)
     go($(e.currentTarget).attr('href'))
