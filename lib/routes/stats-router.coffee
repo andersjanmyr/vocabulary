@@ -7,7 +7,9 @@ router.get '/', (req, res) ->
     res.send(stats)
 
 router.post '/', (req, res) ->
-  statistics.add req.body, (err, id) ->
+  stats = req.body
+  stats.user = req.user and req.user.email
+  statistics.add stats, (err, id) ->
     return res.status(409).send(err) if err
     console.log('id', id)
     res.status(201).json(id)

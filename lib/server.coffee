@@ -117,8 +117,14 @@ app.get "/status", (req, resp) ->
   debug "Status requested"
   resp.send "To be or not to be, that is the question"
 
-app.use "/api/wordlists", wordlistRouter(wordlists)
-app.use "/api/stats", statsRouter(stats)
+findUser = (req, resp, next) ->
+  externalId = req.user && req.user.externalId
+  users.findByExternalId externalId, (err, user) ->
+    req.user = user
+    next()
+
+app.use "/api/wordlists", findUser, wordlistRouter(wordlists)
+app.use "/api/stats", findUser, statsRouter(stats)
 
 
 module.exports = app

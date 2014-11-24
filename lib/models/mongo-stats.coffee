@@ -2,7 +2,7 @@ debug = require('debug')('vocabulary:mongo-stats')
 
 class MongoStats
   constructor: (@db, @seed) ->
-    @stats = db.collection('stats')
+    @stats = db.collection('statistics')
 
   find: (filter, callback) ->
     query = {
