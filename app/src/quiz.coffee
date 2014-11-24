@@ -24,6 +24,7 @@ DonePanel = React.createFactory React.createClass
 
   render: ->
     stats = this.props.stats
+    console.log(stats)
     feedback = this.feedback()
     Dom.div {id: 'stats-panel'}, [
       Dom.div({id: 'quiz-left-panel'}, [
@@ -33,8 +34,9 @@ DonePanel = React.createFactory React.createClass
         Dom.div({className: 'wrong'}, stats.wrong, ' wrong')
         Dom.div({className: 'wrong-case'}, stats.wrongCase, ' wrong case')
         Dom.div({className: 'correct'}, stats.correct, ' correct')
+        Dom.div({className: 'elapsed-time'}, stats.elapsedTime, ' seconds')
         Dom.a({href: '/wordlists', className: 'ilink'}, 'Show wordlists ')
-        Dom.a({href: '#', className: 'ilink', onClick: this.onTryAgain}, 'Try again')
+        Dom.a({href: '#', onClick: this.onTryAgain}, 'Try again')
       ]),
       Dom.div({id: 'quiz-right-panel'}, [
         Dom.div({id: 'quiz-stats-icon', className: feedback.className}, feedback.icon)
@@ -49,7 +51,7 @@ QuizPanel = React.createFactory React.createClass
       feedbackClass: ''
       feedbackIcon: ''
       timeout: 1500
-      errorTimeout: 3000
+      errorTimeout: 2500
     }
 
   render: ->
@@ -121,12 +123,8 @@ module.exports = React.createFactory React.createClass
         correct: 0
       }
       currentIndex: 0
+      startTime: new Date()
     }
-
-
-  cancelClicked: (e) ->
-    e.preventDefault()
-    Router.go('/wordlists')
 
 
   currentPair: ->
@@ -139,6 +137,8 @@ module.exports = React.createFactory React.createClass
       this.state.words.push(this.currentPair())
     this.state.currentIndex++
     this.state.stats.tries = this.state.currentIndex
+    if this.done()
+      this.state.stats.elapsedTime = (new Date() - this.state.startTime)/1000
     this.setState(this.state)
 
   done: ->
