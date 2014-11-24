@@ -10,8 +10,13 @@ Dom = React.DOM
 
 DonePanel = React.createFactory React.createClass
   render: ->
-    Dom.div {id: 'done-panel'}, [
-      'Done'
+    stats =-this.props.stats
+    Dom.div {id: 'stats-panel'}, [
+      Dom.div({id: 'stats-words'}, stats.words)
+      Dom.div({id: 'stats-tries'}, stats.tries)
+      Dom.div({id: 'stats-wrong'}, stats.wrong)
+      Dom.div({id: 'stats-wrong-case'}, stats.wrongCase)
+      Dom.div({id: 'stats-correct'}, stats.correct)
     ]
 
 QuizPanel = React.createFactory React.createClass
@@ -46,6 +51,11 @@ QuizPanel = React.createFactory React.createClass
   componentDidMount: ->
     this.refs.reply.getDOMNode().focus()
 
+  feedbackValue: () ->
+    feedbackClass = this.state.feedbackClass
+    return 'wrongCase' if feedbackClass is 'wrong-case'
+    feedbackClass
+
   onSubmit: (e) ->
     e.preventDefault()
     value = this.refs.reply.getDOMNode().value
@@ -61,8 +71,11 @@ QuizPanel = React.createFactory React.createClass
       this.state.feedbackClass = 'wrong'
       this.state.feedbackIcon = ':('
     this.setState(this.state)
-    timeout = if value is correct then this.state.timeout else this.state.errorTimeout
-    setTimeout(this.resultEntered.bind(this, this.state.feedbackClass), timeout)
+    timeout = if value is correct
+      this.state.timeout
+    else
+      this.state.errorTimeout
+    setTimeout(this.resultEntered.bind(this, this.feedbackValue), timeout)
 
   resultEntered: (result) ->
     this.refs.reply.getDOMNode().value = ''
@@ -78,9 +91,11 @@ module.exports = React.createFactory React.createClass
     {
       words: _.shuffle(this.props.wordlist.words)
       stats: {
-        'wrong': 0
-        'wrong-case': 0
-        'correct': 0
+        words: this.props.wordlists.words.length
+        tries: 0
+        wrong: 0
+        wrongCase: 0
+        correct: 0
       }
       currentIndex: 0
     }
@@ -96,7 +111,10 @@ module.exports = React.createFactory React.createClass
 
   replyEntered: (result) ->
     this.state.stats[result]++
-    this.state.words.push(this.currentPair()) if result isnt 'correct'
+    if result is 'correct'
+      this.state.stats.tries = this.state.currentIndex
+    else
+      this.state.words.push(this.currentPair())
     this.state.currentIndex++
     this.setState(this.state)
 
@@ -110,7 +128,7 @@ module.exports = React.createFactory React.createClass
       ' to ',
       Dom.span({className: 'lang'}, this.props.wordlist.lang2),
       if this.done()
-        DonePanel()
+        DonePanel(stats: this.state.stats)
       else
         QuizPanel({
           pair: this.currentPair(),
