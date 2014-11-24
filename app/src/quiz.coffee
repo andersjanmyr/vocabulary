@@ -58,7 +58,7 @@ QuizPanel = React.createFactory React.createClass
     Dom.form {id: 'quiz-form', onSubmit: this.onSubmit}, [
       Dom.div {id: 'quiz-word-panel'}, [
         Dom.div({id: 'quiz-word'},  this.props.pair[0])
-        Dom.input({id: 'quiz-reply', type: 'text', ref: 'reply'})
+        Dom.input({id: 'quiz-reply', type: 'text', autocomplete: 'off', ref: 'reply'})
       ]
       Dom.div({id: 'quiz-feedback'}, [
         Dom.div({id: 'quiz-feedback-word', className: this.state.feedbackClass},
