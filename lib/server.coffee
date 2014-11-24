@@ -12,9 +12,11 @@ passport = require('passport')
 GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 
 mongoskin = require('mongoskin')
-wordlistRoute = require('./routes/wordlist-route')
+wordlistRouter = require('./routes/wordlist-router')
+statsRouter = require('./routes/stats-router')
 MongoWordlists = require('./models/mongo-wordlists')
 MongoUsers = require('./models/mongo-users')
+MongoStats = require('./models/mongo-stats')
 
 app = express()
 
@@ -46,6 +48,7 @@ console.log("Connecting to Mongo: #{dbUrl}")
 db = mongoskin.db(dbUrl, {safe:true})
 wordlists = new MongoWordlists(db)
 users = new MongoUsers(db)
+stats = new MongoStats(db)
 
 app.set('view engine', 'ejs')
 app.use logger("dev")
@@ -114,7 +117,8 @@ app.get "/status", (req, resp) ->
   debug "Status requested"
   resp.send "To be or not to be, that is the question"
 
-app.use "/api/wordlists", wordlistRoute(wordlists)
+app.use "/api/wordlists", wordlistRouter(wordlists)
+app.use "/api/stats", statsRouter(stats)
 
 
 module.exports = app
