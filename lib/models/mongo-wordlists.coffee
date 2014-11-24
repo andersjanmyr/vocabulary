@@ -9,8 +9,7 @@ class MongoWordlists
     query = {
       $or:[
         {name: { $regex: filter, $options: 'i'}},
-        {author: { $regex: filter, $options: 'i'}},
-        {title: { $regex: filter, $options: 'i'}}
+        {author: { $regex: filter, $options: 'i'}}
       ]
     }
     query = {} unless filter

@@ -10,7 +10,7 @@ db = mongoskin.db('mongodb://@localhost:27017/vocabulary-test', {safe:true});
 seed =
   {
     provider: 'google'
-    externalid: 'https://and.id.com'
+    externalId: 'https://and.id.com'
     displayName: 'Tapir'
     email: 'tapir@janmyr.com'
     picture: 'http://fc09.deviantart.net/fs41/f/2009/030/2/7/tapir_avatar_by_gescheitert.png'
