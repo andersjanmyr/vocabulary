@@ -253,11 +253,17 @@ a, a:visited {
 }
 
 #stats-panel {
-  font-size: 18pt;
+  div {
+    font-size: 18pt;
 
-  .correct { color: green; }
-  .wrong-case { color: orange; }
-  .wrong { color: red; }
+    &.correct { color: green; }
+    &.wrong-case { color: orange; }
+    &.wrong { color: red; }
+  }
+  a {
+    display: block;
+    margin-top: 8px;
+  }
 }
 
 #footer {

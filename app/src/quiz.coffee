@@ -18,6 +18,8 @@ DonePanel = React.createFactory React.createClass
       Dom.div({className: 'wrong'}, stats.wrong, ' wrong')
       Dom.div({className: 'wrong-case'}, stats.wrongCase, ' wrong case')
       Dom.div({className: 'correct'}, stats.correct, ' correct')
+      Dom.a({href: '/wordlists', className: 'ilink'}, 'Show wordlists ')
+      Dom.a({href: window.location.pathname, className: 'ilink'}, 'Try again')
     ]
 
 QuizPanel = React.createFactory React.createClass
