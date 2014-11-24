@@ -252,7 +252,7 @@ a, a:visited {
   &.wrong { background: red; }
 }
 
-#stats-panel {
+#quiz-left-panel {
   div {
     font-size: 18pt;
 
@@ -264,6 +264,42 @@ a, a:visited {
     display: block;
     margin-top: 8px;
   }
+}
+
+#quiz-left-panel {
+  float: left;
+  height: 100%;
+  width: 50%;
+}
+
+#quiz-right-panel {
+  float: right;
+  height: 100%;
+  width: 50%;
+}
+
+#quiz-stats-icon {
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+  font-size: 96px;
+  font-family: Verdana;
+  margin-top: 20px;
+  padding-top: 40px;
+  padding-left: 40px;
+
+  &.perfect { background: green; }
+  &.ok { background: orange; }
+  &.bad { background: red; }
+}
+
+#quiz-stats-word {
+  font-size: 36pt;
+  margin-left: 20px;
+
+  &.perfect { color: green; }
+  &.ok { color: orange; }
+  &.bad { color: red; }
 }
 
 #footer {

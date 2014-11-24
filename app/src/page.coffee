@@ -14,7 +14,7 @@ module.exports = React.createFactory React.createClass
           Dom.a({href: 'https://github.com/andersjanmyr/vocabulary/issues', target:'_blank'}, 'Gihub Issues')
         ]),
         Dom.div({id: 'contact'}, [
-          'Version 0.9, by Anders Janmyr ',
+          'Version 1.0, by Anders Janmyr ',
           Dom.a({href: 'http://anders.janmyr.com/', target:'_blank'}, 'anders.janmyr.com')
         ])
       ]

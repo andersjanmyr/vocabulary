@@ -9,17 +9,37 @@ Service = require './service'
 Dom = React.DOM
 
 DonePanel = React.createFactory React.createClass
+  feedback: () ->
+    stats = this.props.stats
+    if stats.tries is stats.words
+      {className: 'perfect', icon: ':D', word: 'Perfect!' }
+    else if stats.tries > (stats.words * 1.5)
+      {className: 'ok', icon: ':/', word: 'Not bad!' }
+    else
+      {className: 'bad', icon: ':(', word: 'Practice!' }
+
+  onTryAgain: (e) ->
+    e.preventDefault()
+    this.props.reset()
+
   render: ->
     stats = this.props.stats
+    feedback = this.feedback()
     Dom.div {id: 'stats-panel'}, [
-      Dom.h2({}, 'Stats')
-      Dom.div({id: 'stats-words'}, stats.words, ' words')
-      Dom.div({id: 'stats-tries'}, stats.tries, ' tries')
-      Dom.div({className: 'wrong'}, stats.wrong, ' wrong')
-      Dom.div({className: 'wrong-case'}, stats.wrongCase, ' wrong case')
-      Dom.div({className: 'correct'}, stats.correct, ' correct')
-      Dom.a({href: '/wordlists', className: 'ilink'}, 'Show wordlists ')
-      Dom.a({href: window.location.pathname, className: 'ilink'}, 'Try again')
+      Dom.div({id: 'quiz-left-panel'}, [
+        Dom.h2({}, 'Stats')
+        Dom.div({id: 'stats-words'}, stats.words, ' words')
+        Dom.div({id: 'stats-tries'}, stats.tries, ' tries')
+        Dom.div({className: 'wrong'}, stats.wrong, ' wrong')
+        Dom.div({className: 'wrong-case'}, stats.wrongCase, ' wrong case')
+        Dom.div({className: 'correct'}, stats.correct, ' correct')
+        Dom.a({href: '/wordlists', className: 'ilink'}, 'Show wordlists ')
+        Dom.a({href: '#', className: 'ilink', onClick: this.onTryAgain}, 'Try again')
+      ]),
+      Dom.div({id: 'quiz-right-panel'}, [
+        Dom.div({id: 'quiz-stats-icon', className: feedback.className}, feedback.icon)
+        Dom.div({id: 'quiz-stats-word', className: feedback.className}, feedback.word)
+      ])
     ]
 
 QuizPanel = React.createFactory React.createClass
@@ -124,6 +144,9 @@ module.exports = React.createFactory React.createClass
   done: ->
     this.state.currentIndex >= this.state.words.length
 
+  reset: ->
+    this.setState(this.getInitialState())
+
   render: ->
     Dom.div {id: 'quiz'}, [
       Dom.h1({ id: 'quiz-name'}, "Quiz: #{this.props.wordlist.name}")
@@ -132,7 +155,7 @@ module.exports = React.createFactory React.createClass
       Dom.span({className: 'lang'}, this.props.wordlist.lang2),
       Dom.div {id: 'quiz-panel'}, [
         if this.done()
-          DonePanel(stats: this.state.stats)
+          DonePanel(stats: this.state.stats, reset: this.reset)
         else
           QuizPanel({
             pair: this.currentPair(),
