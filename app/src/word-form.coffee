@@ -78,8 +78,9 @@ module.exports = React.createFactory React.createClass
   stateInput: (name) ->
     Dom.input({
       ref: name,
-      type: 'text',
+      type: 'text'
       valueLink: this.linkState(name)
+      autocomplete: 'off'
     })
 
   langSelect: (name) ->
@@ -101,6 +102,7 @@ module.exports = React.createFactory React.createClass
         ref: 'name',
         placeholder: 'Book, chapter, ...'
         value: this.state.wordlist.name,
+        autocomplete: 'off'
         onChange: =>
           this.state.wordlist.name = this.refs.name.getDOMNode().value
           this.setState(this.state)

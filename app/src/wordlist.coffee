@@ -9,6 +9,7 @@ EditWordRow = React.createFactory React.createClass
     Dom.input({
       ref: name,
       type: 'text',
+      autocomplete: 'off'
       defaultValue: this.props[name]
     })
 
