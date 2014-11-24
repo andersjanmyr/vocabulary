@@ -155,6 +155,8 @@ module.exports = React.createFactory React.createClass
       Dom.span({className: 'lang'}, this.props.wordlist.lang2),
       Dom.div {id: 'quiz-panel'}, [
         if this.done()
+          Service.saveStats this.state.stats, (err, result) ->
+            console.log(err, result)
           DonePanel(stats: this.state.stats, reset: this.reset)
         else
           QuizPanel({

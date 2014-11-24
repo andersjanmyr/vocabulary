@@ -43,6 +43,17 @@ Service = {
       url: "/api/wordlists/#{id}"
       success: callback.bind(null, null)
     })
+
+  saveStats: (stats, callback) ->
+    $.ajax({
+      type: 'POST'
+      contentType: 'application/json'
+      dataType: 'json'
+      url: '/api/stats'
+      data: JSON.stringify(stats)
+      success: callback.bind(null, null)
+    })
+
 }
 
 module.exports = Service
