@@ -50,8 +50,8 @@ QuizPanel = React.createFactory React.createClass
       correct: ''
       feedbackClass: ''
       feedbackIcon: ''
-      timeout: 1500
-      errorTimeout: 2500
+      timeout: 600
+      errorTimeout: 1500
     }
 
   render: ->
