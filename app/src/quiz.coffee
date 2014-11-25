@@ -13,7 +13,7 @@ DonePanel = React.createFactory React.createClass
     stats = this.props.stats
     if stats.tries is stats.words
       {className: 'perfect', icon: ':D', word: 'Perfect!' }
-    else if stats.tries > (stats.words * 1.5)
+    else if stats.tries < (stats.words * 1.5)
       {className: 'ok', icon: ':/', word: 'Not bad!' }
     else
       {className: 'bad', icon: ':(', word: 'Practice!' }
