@@ -105,7 +105,7 @@ renderIndex = (req, resp) ->
     debug('findByExternalId', err, user)
     resp.render('index', {
       isDevelopment: isDevelopment()
-      user: util.inspect(_.omit(user, '_id'))
+      user: util.inspect(_.omit(user, ['_id', 'createDate']))
     })
  
 app.get "/", renderIndex

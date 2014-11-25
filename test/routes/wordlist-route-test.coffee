@@ -4,7 +4,7 @@ sinon = require('sinon')
 express = require('express')
 bodyParser = require('body-parser')
 
-wordlistRouter = require('../../lib/routes/wordlist-route.coffee')
+wordlistRouter = require('../../lib/routes/wordlist-router.coffee')
 
 app = express()
 app.use(bodyParser.json())

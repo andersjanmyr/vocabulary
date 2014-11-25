@@ -5,6 +5,7 @@ class MongoUsers
     @users = db.collection('users')
 
   findOrCreate: (user, callback) ->
+    user.createDate = new Date()
     @users.findAndModify(
       {externalId: user.externalId},
       null,

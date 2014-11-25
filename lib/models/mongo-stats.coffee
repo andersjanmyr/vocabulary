@@ -16,6 +16,7 @@ class MongoStats
 
   add: (stat, callback) ->
     debug('add', stat)
+    stat.createDate = new Date()
     @stats.insert stat, (err, addedLists) ->
       debug('add', addedLists)
       callback(err, addedLists[0]._id)

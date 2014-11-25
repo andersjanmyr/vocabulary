@@ -24,6 +24,8 @@ class MongoWordlists
 
   add: (wordlist, callback) ->
     debug('add', wordlist)
+    wordlist.createDate = new Date()
+    wordlist.modifiedDate = new Date()
     @wordlists.insert wordlist, (err, addedLists) ->
       debug('add', addedLists)
       callback(err, addedLists[0]._id)
@@ -32,6 +34,7 @@ class MongoWordlists
     wordlists = @wordlists
     id = wordlist._id
     delete(wordlist._id)
+    wordlist.modifiedDate = new Date()
     @findById id, (err, found) ->
       return callback('wordlist not found, id: ' + id) unless found
       wordlists.updateById id, wordlist, (err) ->
