@@ -5,7 +5,7 @@ set -o errexit
 git status --short |grep ''
 changed=$?
 if [ $changed -eq 0 ]; then
-  git stash save 'Before deploy'
+  git stash save -u 'Before deploy'
 fi
 
 git checkout deploy
