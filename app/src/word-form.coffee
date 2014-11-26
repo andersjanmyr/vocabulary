@@ -41,12 +41,17 @@ module.exports = React.createFactory React.createClass
     exists2 = words.some (pair) ->
       return true if pair[1] is state.inputWord2
 
-    if exists1 or !state.inputWord1
+    console.log(state.inputWord1, state.inputWord2)
+    if !state.inputWord1
+      this.refs.inputWord1.getDOMNode().focus()
+    else if !state.inputWord2
+      this.refs.inputWord2.getDOMNode().focus()
+    else if exists1
       MessagePanel.showError("Word already exists, #{state.inputWord1}, not added!")
       elWord1 = this.refs.inputWord1.getDOMNode()
       elWord1.focus()
       elWord1.select()
-    else if exists2 or !state.inputWord2
+    else if exists2
       MessagePanel.showError("Word already exists, #{state.inputWord2}, not added!")
       elWord2 = this.refs.inputWord2.getDOMNode()
       elWord2.focus()
