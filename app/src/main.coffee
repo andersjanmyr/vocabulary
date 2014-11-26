@@ -25,10 +25,6 @@ Router.addRoute '/', 'Wordlist', (params) ->
   Service.getWordlists params.filter, (err, lists) ->
     React.render(wordlistsPage(lists), document.body)
 
-Router.addRoute '/wordlists', 'Wordlist', (params) ->
-  Service.getWordlists params.filter, (err, lists) ->
-    React.render(wordlistsPage(lists), document.body)
-
 Router.addRoute '/wordform/(:id)', 'Wordform', (params) ->
   console.log('params', params)
   if params.id
