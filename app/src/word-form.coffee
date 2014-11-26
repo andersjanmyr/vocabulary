@@ -29,6 +29,9 @@ module.exports = React.createFactory React.createClass
     this.languages.map (lang) ->
       Dom.option {key: lang, value: lang}, lang
 
+  trimSpaces: (word) ->
+    word.trim().replace(/\s+/g, ' ')
+
   addClicked: (e) ->
     e.preventDefault()
     state = this.state
@@ -50,7 +53,8 @@ module.exports = React.createFactory React.createClass
       elWord2.select()
     else
       elWord1 = this.refs.inputWord1.getDOMNode().focus()
-      words.push [this.state.inputWord1, this.state.inputWord2]
+      words.push [this.trimSpaces(this.state.inputWord1),
+        this.trimSpaces(this.state.inputWord2)]
       this.state.inputWord1 = ''
       this.state.inputWord2 = ''
     this.setState(this.state)

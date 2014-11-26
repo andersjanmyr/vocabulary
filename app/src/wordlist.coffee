@@ -13,11 +13,14 @@ EditWordRow = React.createFactory React.createClass
       defaultValue: this.props[name]
     })
 
+  trimSpaces: (word) ->
+    word.trim().replace(/\s+/g, ' ')
+
   save: (e) ->
     e.preventDefault()
     this.props.onSave(
-      this.refs.word1.getDOMNode().value,
-      this.refs.word2.getDOMNode().value)
+      this.trimSpaces(this.refs.word1.getDOMNode().value),
+      this.trimSpaces(this.refs.word2.getDOMNode().value))
 
   render: ->
     Dom.div {className: 'row'}, [
@@ -45,6 +48,7 @@ WordRow = React.createFactory React.createClass
     this.setState(this.state)
 
   save: (word1, word2) ->
+    console.log('save', word1, word2)
     this.props.pair[0] = word1
     this.props.pair[1] = word2
     this.state.editing = false
