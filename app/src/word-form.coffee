@@ -66,14 +66,14 @@ module.exports = React.createFactory React.createClass
       Service.saveWordlist this.state.wordlist, (err, wordlist) ->
         console.log(err, wordlist)
         return MessagePanel.showError("Cannot save wordlist, #{err}") if err
-        Router.go('/wordlists')
+        Router.go('/')
     else
       MessagePanel.showError("You can't save someone else's wordlist, owned by:
         #{this.state.wordlist.owner}")
 
   cancelClicked: (e) ->
     e.preventDefault()
-    Router.go('/wordlists')
+    Router.go('/')
 
   componentDidMount: ->
     this.refs.inputWord1.getDOMNode().focus()

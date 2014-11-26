@@ -35,7 +35,7 @@ DonePanel = React.createFactory React.createClass
         Dom.div({className: 'wrong-case'}, stats.wrongCase, ' wrong case')
         Dom.div({className: 'correct'}, stats.correct, ' correct')
         Dom.div({className: 'elapsed-time'}, stats.elapsedTime, ' seconds')
-        Dom.a({href: '/wordlists', className: 'ilink'}, 'Show wordlists ')
+        Dom.a({href: '/', className: 'ilink'}, 'Show wordlists ')
         Dom.a({href: '#', onClick: this.onTryAgain}, 'Try again')
       ]),
       Dom.div({id: 'quiz-right-panel'}, [
