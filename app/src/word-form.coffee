@@ -7,7 +7,7 @@ Router = require './router'
 Service = require './service'
 
 emptyList = {
-  name: "New list"
+  name: ""
   owner: Auth.currentUser
   lang1: "Swedish"
   lang2: "English"
