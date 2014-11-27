@@ -7,6 +7,7 @@ logger = require("morgan")
 cookieParser = require("cookie-parser")
 cookieSession = require("cookie-session")
 bodyParser = require("body-parser")
+compression = require('compression')
 
 passport = require('passport')
 GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
@@ -51,6 +52,7 @@ users = new MongoUsers(db)
 stats = new MongoStats(db)
 
 app.set('view engine', 'ejs')
+app.use compression()
 app.use logger("dev")
 app.use bodyParser.json()
 app.use bodyParser.urlencoded({extended: true})

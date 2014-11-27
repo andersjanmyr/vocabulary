@@ -21,6 +21,7 @@
   "dependencies": {
     "body-parser": "*",
     "coffee-script": "*",
+    "compression": "^1.2.1",
     "cookie-parser": "*",
     "cookie-session": "^1.1.0",
     "debug": "*",
