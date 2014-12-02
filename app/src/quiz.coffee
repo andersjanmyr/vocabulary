@@ -11,6 +11,8 @@ Dom = React.DOM
 DonePanel = React.createFactory React.createClass
   feedback: () ->
     stats = this.props.stats
+    if stats.gaveUp
+      return {className: 'bad', icon: ':(', word: "Don't give up!" }
     if stats.tries is stats.words
       {className: 'perfect', icon: ':D', word: 'Perfect!' }
     else if stats.tries < (stats.words * 1.5)
@@ -55,8 +57,8 @@ QuizPanel = React.createFactory React.createClass
     }
 
   render: ->
-    Dom.form {id: 'quiz-form', onSubmit: this.onSubmit}, [
-      Dom.div {id: 'quiz-word-panel'}, [
+    Dom.form({id: 'quiz-form', onSubmit: this.onSubmit}, [
+      Dom.div({id: 'quiz-word-panel'}, [
         Dom.div({id: 'quiz-word'},  this.props.pair[0])
         Dom.input({
           id: 'quiz-reply',
@@ -65,19 +67,24 @@ QuizPanel = React.createFactory React.createClass
           ref: 'reply'
           disabled: !!this.state.feedbackIcon
         })
-      ]
+      ])
       Dom.div({id: 'quiz-feedback'}, [
         Dom.div({id: 'quiz-feedback-word', className: this.state.feedbackClass},
           this.state.correct)
         Dom.div({id: 'quiz-feedback-icon', className: this.state.feedbackClass},
           this.state.feedbackIcon)
-      ]
-      Dom.div {id: 'quiz-count-panel'}, [
+      ])
+      Dom.div({id: 'quiz-count-panel'}, [
         Dom.span({id: 'quiz-current'},  this.props.current)
         ' / '
         Dom.span({id: 'quiz-count'},  this.props.count)
       ])
-    ]
+      Dom.a({href: '#', onClick: this.onGiveUp}, 'Give up')
+    ])
+
+  onGiveUp: (e) ->
+    e.preventDefault()
+    this.props.giveUp()
 
   componentDidMount: ->
     this.refs.reply.getDOMNode().focus()
@@ -136,6 +143,10 @@ module.exports = React.createFactory React.createClass
   currentPair: ->
     this.state.words[this.state.currentIndex]
 
+  giveUp: ->
+    this.state.stats.gaveUp = true
+    this.setState(this.state)
+
   replyEntered: (result) ->
     this.state.stats[result]++
     console.log('result', result)
@@ -148,7 +159,8 @@ module.exports = React.createFactory React.createClass
     this.setState(this.state)
 
   done: ->
-    this.state.currentIndex >= this.state.words.length
+    this.state.stats.gaveUp or
+      this.state.currentIndex >= this.state.words.length
 
   reset: ->
     this.setState(this.getInitialState())
@@ -170,6 +182,7 @@ module.exports = React.createFactory React.createClass
             count: this.state.words.length,
             current: this.state.currentIndex+1,
             replyEntered: this.replyEntered
+            giveUp: this.giveUp
           })
       ]
     ]
