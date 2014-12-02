@@ -42,6 +42,7 @@
     "less": "*",
     "literalify": "^0.3.0",
     "livereload": "^0.3.4",
+    "mocha": "^2.0.1",
     "nodemon": "*",
     "react": "*",
     "react-tools": "*",
