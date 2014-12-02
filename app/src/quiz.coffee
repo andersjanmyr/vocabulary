@@ -58,7 +58,13 @@ QuizPanel = React.createFactory React.createClass
     Dom.form {id: 'quiz-form', onSubmit: this.onSubmit}, [
       Dom.div {id: 'quiz-word-panel'}, [
         Dom.div({id: 'quiz-word'},  this.props.pair[0])
-        Dom.input({id: 'quiz-reply', type: 'text', autocomplete: 'off', ref: 'reply'})
+        Dom.input({
+          id: 'quiz-reply',
+          type: 'text',
+          autoComplete: 'off',
+          ref: 'reply'
+          disabled: !!this.state.feedbackIcon
+        })
       ]
       Dom.div({id: 'quiz-feedback'}, [
         Dom.div({id: 'quiz-feedback-word', className: this.state.feedbackClass},
@@ -104,11 +110,11 @@ QuizPanel = React.createFactory React.createClass
 
   resultEntered: (result) ->
     this.refs.reply.getDOMNode().value = ''
-    this.refs.reply.getDOMNode().focus()
     this.state.correct = ''
     this.state.feedbackClass = ''
     this.state.feedbackIcon = ''
     this.props.replyEntered(result)
+    this.refs.reply.getDOMNode().focus()
 
 
 module.exports = React.createFactory React.createClass
