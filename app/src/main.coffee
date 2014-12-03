@@ -2,7 +2,6 @@
 
 React = require 'react'
 
-app = {}
 Page = require './page'
 WordForm = require './word-form'
 Wordlists = require './wordlists'
