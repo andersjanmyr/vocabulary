@@ -129,6 +129,8 @@ module.exports = React.createFactory React.createClass
     {
       words: _.shuffle(this.props.wordlist.words)
       stats: {
+        user: Auth.currentUser
+        quiz: this.props.wordslist._id
         words: this.props.wordlist.words.length
         tries: 0
         wrong: 0
