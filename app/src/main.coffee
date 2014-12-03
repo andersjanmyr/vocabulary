@@ -60,6 +60,6 @@ Router.addRoute '/quiz/:id', 'Quiz', (params) ->
 
 Router.start()
 
-Router.go('/')
+Router.go(location.pathname)
 
 
