@@ -7,7 +7,7 @@ class MongoStats
   find: (filter, callback) ->
     query = {
       $or:[
-        {author: { $regex: filter, $options: 'i'}}
+        {user: { $regex: filter, $options: 'i'}}
       ]
     }
     query = {} unless filter
