@@ -11,6 +11,7 @@ Wordlists = React.createFactory React.createClass
       Dom.span {className: 'name'}, item.name
       Dom.span {className: 'amount'}, "(#{item.words.length} words)"
       Dom.div {className: 'owner'}, item.owner
+      Dom.a {href: "/wordlists/#{item._id}", className: 'ilink'}, 'View'
       Dom.a {href: "/wordform/#{item._id}", className: 'ilink'}, 'Edit' if Auth.ownedByCurrentUser(item.owner)
       Dom.a {href: "/wordlists/#{item._id}/delete", className: 'ilink delete'}, 'Delete' if Auth.ownedByCurrentUser(item.owner)
       Dom.a {href: "/quiz/#{item._id}", className: 'ilink'}, 'Quiz'

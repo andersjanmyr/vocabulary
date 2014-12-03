@@ -5,6 +5,7 @@ React = require 'react'
 Page = require './page'
 WordForm = require './word-form'
 Wordlists = require './wordlists'
+WordlistView = require './wordlist-view'
 Quiz = require './quiz'
 Router = require './router'
 Service = require './service'
@@ -16,6 +17,9 @@ quizPage = (list) ->
 
 wordFormPage = (list) ->
   Page({ pageClass: 'word-form', content: WordForm({wordlist: list}) })
+
+wordlistPage = (list) ->
+  Page({ pageClass: 'word-list', content: WordlistView({wordlist: list}) })
 
 wordlistsPage = (lists) ->
   Page({ pageClass: 'word-lists', content: Wordlists(wordlists: lists)})
@@ -32,6 +36,12 @@ Router.addRoute '/wordform/(:id)', 'Wordform', (params) ->
       React.render(wordFormPage(list), document.body)
   else
     React.render(wordFormPage(), document.body)
+
+Router.addRoute '/wordlists/(:id)', 'Wordlist', (params) ->
+  console.log('params', params)
+  Service.getWordlist params.id, (err, list) ->
+    console.log('list', err, list)
+    React.render(wordlistPage(list), document.body)
 
 Router.addRoute '/wordlists/:id/delete', 'Wordlist delete', (params) ->
   console.log('params', params)

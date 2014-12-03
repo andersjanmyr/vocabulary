@@ -44,6 +44,7 @@ WordRow = React.createFactory React.createClass
 
   edit: (e) ->
     e.preventDefault()
+    return if !this.props.editable
     this.state.editing = true
     this.setState(this.state)
 
@@ -72,8 +73,9 @@ WordRow = React.createFactory React.createClass
 module.exports = React.createFactory React.createClass
 
   renderRows: ->
+    editable = this.props.editable
     this.props.words.map (pair) ->
-        WordRow(pair: pair)
+        WordRow(pair: pair, editable: editable)
 
   render: ->
     Dom.div {id: 'word-list'}, this.renderRows()

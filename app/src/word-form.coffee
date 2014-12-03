@@ -120,7 +120,7 @@ module.exports = React.createFactory React.createClass
         this.langSelect('lang1')
         this.langSelect('lang2')
       ]),
-      Wordlist({words: this.state.wordlist.words}),
+      Wordlist({words: this.state.wordlist.words, editable:true}),
       Dom.div({ id: 'inputs' }, [
         this.stateInput('inputWord1'),
         this.stateInput('inputWord2'),
