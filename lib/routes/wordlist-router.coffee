@@ -12,25 +12,29 @@ router.get '/:id', (req, res) ->
     return res.status(404).send(err) if err
     res.send(wordlist)
 
-router.post '/', (req, res) ->
+verifyUserIsOwner = (req, resource) ->
   user = req.user and req.user.email
-  debug 'user', user
-  if not user
-    return res.status(403).json('Not logged in')
-  if user isnt req.body.owner
-    return res.status(403).json('Cannot create resource for another user')
+  debug 'currentUserIsOwner', user
+  if not user or user isnt resource.owner
+    return {
+      error: 'Resource is not owned by by current user'
+      currentUser: user
+      owner: resource.owner
+    }
+  return {error: false}
+
+router.post '/', (req, res) ->
+  result = verifyUserIsOwner(req, req.body)
+  return res.status(403).send(result) if result.error
+
   wordlist.add req.body, (err, id) ->
     return res.status(409).send(err) if err
     console.log('id', id)
     res.status(201).json(id)
 
 router.put '/:id', (req, res) ->
-  user = req.user and req.user.email
-  debug 'user', user
-  if not user
-    return res.status(403).json('Not logged in')
-  if user isnt req.body.owner
-    return res.status(403).json('Cannot create resource for another user')
+  result = verifyUserIsOwner(req, req.body)
+  return res.status(403).send(result) if result.error
   req.body.id = req.param('id')
   wordlist.update req.body, (err, wordlist) ->
     return res.status(404).send(err) if err
