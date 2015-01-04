@@ -54,6 +54,16 @@ Service = {
       success: callback.bind(null, null)
     })
 
+  getStatsByUser: (email, callback) ->
+    $.ajax({
+      type: 'GET'
+      contentType: 'application/json'
+      dataType: 'json'
+      url: "/api/stats/#{email}"
+      success: callback.bind(null, null)
+    })
+
+
 }
 
 module.exports = Service

@@ -112,6 +112,7 @@ app.get "/", renderIndex
 app.get "/wordlists/*", renderIndex
 app.get "/wordform/*", renderIndex
 app.get "/quiz/*", renderIndex
+app.get "/users/*", renderIndex
 
 app.get "/status", (req, resp) ->
   debug "Status requested"

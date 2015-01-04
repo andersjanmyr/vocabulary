@@ -14,6 +14,10 @@ router.post '/', (req, res) ->
     console.log('id', id)
     res.status(201).json(id)
 
+router.get '/:email', (req, res) ->
+  statistics.byUser req.params.email, (err, stats) ->
+    return res.status(500).send(err) if err
+    res.send(stats)
 
 statistics = null
 statsRouter = (statsModel) ->

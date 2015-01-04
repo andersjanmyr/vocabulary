@@ -9,8 +9,12 @@ WordlistView = require './wordlist-view'
 Quiz = require './quiz'
 Router = require './router'
 Service = require './service'
+User = require './user'
 
 React.initializeTouchEvents(true)
+
+userPage = (stats) ->
+  Page({ pageClass: 'user', content: User({stats: stats}) })
 
 quizPage = (list) ->
   Page({ pageClass: 'quiz', content: Quiz({wordlist: list}) })
@@ -57,6 +61,12 @@ Router.addRoute '/quiz/:id', 'Quiz', (params) ->
   Service.getWordlist params.id, (err, list) ->
     console.log('list', err, list)
     React.render(quizPage(list), document.body)
+
+Router.addRoute '/users/:email', 'Users', (params) ->
+  console.log('params', params.email)
+  Service.getStatsByUser params.email, (err, stats) ->
+    console.log('userStats', err, stats)
+    React.render(userPage(stats), document.body)
 
 Router.start()
 

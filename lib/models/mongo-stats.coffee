@@ -12,7 +12,25 @@ class MongoStats
     }
     query = {} unless filter
     @stats.find(query).toArray (err, stats) ->
-        callback(err, stats)
+      callback(err, stats)
+
+  byUser: (user, callback) ->
+    query = {user: user}
+    @stats.find(query).toArray (err, stats) ->
+      return callback(err) if err
+      count = stats.length
+      perfect = stats.filter((stat) -> stat.tries == stat.words).length
+      ok = stats.filter((stat) -> stat.tries < (stat.words * 1.5)).length - perfect
+      bad = stats.filter((stat) -> stat.tries >= (stat.words * 1.5)).length
+      callback(null, {
+        count: count
+        perfect: perfect
+        ok: ok
+        bad: bad,
+        perfectPerc: parseInt(perfect / count * 100, 10)
+        okPerc: parseInt(ok / count * 100, 10)
+        badPerc: parseInt(bad / count * 100, 10)
+      })
 
   add: (stat, callback) ->
     debug('add', stat)
