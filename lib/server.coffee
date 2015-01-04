@@ -82,7 +82,8 @@ passport.serializeUser (user, done) ->
 
 passport.deserializeUser (identifier, done) ->
   debug('deserializeUser', identifier)
-  done(null, { externalId: identifier})
+  users.findByExternalId identifier, (err, user) ->
+      done(err, user)
 
 passport.use(strategy)
 
@@ -102,13 +103,10 @@ app.get '/logout', (req, res) ->
 
 renderIndex = (req, resp) ->
   debug('user', req.user)
-  externalId = req.user && req.user.externalId
-  users.findByExternalId externalId, (err, user) ->
-    debug('findByExternalId', err, user)
-    resp.render('index', {
-      isDevelopment: isDevelopment()
-      user: util.inspect(_.omit(user, ['_id', 'createDate']))
-    })
+  resp.render('index', {
+    isDevelopment: isDevelopment()
+    user: util.inspect(_.omit(req.user, ['_id', 'createDate']))
+  })
  
 app.get "/", renderIndex
 app.get "/wordlists/*", renderIndex

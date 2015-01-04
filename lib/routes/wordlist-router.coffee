@@ -1,5 +1,6 @@
 express = require('express')
 router = express.Router()
+debug = require('debug')('vocabulary:wordlistRouter')
 
 router.get '/', (req, res) ->
   wordlist.find req.query.filter, (err, wordlists) ->
@@ -13,6 +14,7 @@ router.get '/:id', (req, res) ->
 
 router.post '/', (req, res) ->
   user = req.user and req.user.email
+  debug 'user', user
   if not user
     return res.status(403).json('Not logged in')
   if user isnt req.body.owner
@@ -24,6 +26,7 @@ router.post '/', (req, res) ->
 
 router.put '/:id', (req, res) ->
   user = req.user and req.user.email
+  debug 'user', user
   if not user
     return res.status(403).json('Not logged in')
   if user isnt req.body.owner
