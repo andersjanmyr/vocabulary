@@ -13,7 +13,7 @@ class MongoWordlists
       ]
     }
     query = {} unless filter
-    @wordlists.find(query).toArray (err, wordlists) ->
+    @wordlists.find(query).sort({createDate: -1}).toArray (err, wordlists) ->
         callback(err, wordlists)
 
   findById: (id, callback) ->
