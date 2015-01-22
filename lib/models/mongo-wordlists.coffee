@@ -34,6 +34,7 @@ class MongoWordlists
     wordlists = @wordlists
     id = wordlist._id
     delete(wordlist._id)
+    wordlist.createDate = new Date(wordlist.createDate)
     wordlist.modifiedDate = new Date()
     @findById id, (err, found) ->
       return callback('wordlist not found, id: ' + id) unless found
