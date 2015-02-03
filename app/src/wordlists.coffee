@@ -10,6 +10,8 @@ Wordlists = React.createFactory React.createClass
     Dom.li {key: item._id}, [
       Dom.span {className: 'name'}, item.name
       Dom.span {className: 'amount'}, "(#{item.words.length} words)"
+      Dom.div {className: "language #{item.lang1}"}
+      Dom.div {className: "language #{item.lang2}"}
       Dom.div {className: 'owner'}, item.owner
       Dom.a {href: "/wordlists/#{item._id}", className: 'ilink'}, 'View'
       Dom.a {href: "/wordform/#{item._id}", className: 'ilink'}, 'Edit' if Auth.ownedByCurrentUser(item.owner)
