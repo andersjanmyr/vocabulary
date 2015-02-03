@@ -127,7 +127,7 @@ QuizPanel = React.createFactory React.createClass
 module.exports = React.createFactory React.createClass
   getInitialState: ->
     {
-      words: _.shuffle(this.props.wordlist.words)
+      words: _.shuffle(this.reverseWords(this.props.reverse))
       stats: {
         user: Auth.currentUser
         quiz: this.props.wordlist._id
@@ -141,6 +141,11 @@ module.exports = React.createFactory React.createClass
       startTime: new Date()
     }
 
+  reverseWords: (reverse) ->
+      if reverse
+        [b, a] for [a, b] in this.props.wordlist.words
+      else
+        this.props.wordlist.words
 
   currentPair: ->
     this.state.words[this.state.currentIndex]
@@ -167,12 +172,18 @@ module.exports = React.createFactory React.createClass
   reset: ->
     this.setState(this.getInitialState())
 
+  languagePanel: ->
+    if this.props.reverse
+      [ Dom.div({className: "language #{this.props.wordlist.lang2}"})
+        Dom.div({className: "language #{this.props.wordlist.lang1}"})]
+    else
+      [ Dom.div({className: "language #{this.props.wordlist.lang1}"})
+        Dom.div({className: "language #{this.props.wordlist.lang2}"})]
+
   render: ->
     Dom.div {id: 'quiz'}, [
       Dom.h1({ id: 'quiz-name'}, "Quiz: #{this.props.wordlist.name}")
-      Dom.span({className: 'lang'}, this.props.wordlist.lang1),
-      ' to ',
-      Dom.span({className: 'lang'}, this.props.wordlist.lang2),
+      Dom.div {className: 'languages'}, this.languagePanel()
       Dom.div {id: 'quiz-panel'}, [
         if this.done()
           Service.saveStats this.state.stats, (err, result) ->

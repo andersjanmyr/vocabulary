@@ -16,8 +16,8 @@ React.initializeTouchEvents(true)
 userPage = (stats) ->
   Page({ pageClass: 'user', content: User({stats: stats}) })
 
-quizPage = (list) ->
-  Page({ pageClass: 'quiz', content: Quiz({wordlist: list}) })
+quizPage = (list, reverse) ->
+  Page({ pageClass: 'quiz', content: Quiz({wordlist: list, reverse: reverse}) })
 
 wordFormPage = (list) ->
   Page({ pageClass: 'word-form', content: WordForm({wordlist: list}) })
@@ -61,6 +61,12 @@ Router.addRoute '/quiz/:id', 'Quiz', (params) ->
   Service.getWordlist params.id, (err, list) ->
     console.log('list', err, list)
     React.render(quizPage(list), document.body)
+
+Router.addRoute '/quiz/:id/reverse', 'Quiz Reverse', (params) ->
+  console.log('params', params)
+  Service.getWordlist params.id, (err, list) ->
+    console.log('list', err, list)
+    React.render(quizPage(list, true), document.body)
 
 Router.addRoute '/users/:email', 'Users', (params) ->
   console.log('params', params.email)
