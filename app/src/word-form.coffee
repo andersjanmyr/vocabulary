@@ -24,7 +24,7 @@ module.exports = React.createFactory React.createClass
       wordlist: $.extend(true, {}, this.props.wordlist or emptyList)
     }
 
-  languages: [ 'Swedish', 'English', 'Spanish']
+  languages: [ 'Swedish', 'English', 'Spanish', 'Italian']
   languageOptions: (selectedLang) ->
     this.languages.map (lang) ->
       Dom.option {key: lang, value: lang}, lang
