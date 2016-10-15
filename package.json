@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "private": true,
   "engines": {
-      "node": "0.10.x"
+    "node": "6.x"
   },
   "repository": {
     "type": "git",
@@ -22,19 +22,34 @@
     "deploy": "./bin/deploy.sh"
   },
   "dependencies": {
-    "body-parser": "*",
-    "coffee-script": "*",
-    "compression": "^1.2.1",
-    "cookie-parser": "*",
-    "cookie-session": "^1.1.0",
-    "debug": "*",
+    "body-parser": "^1.15.2",
+    "browserify": "^13.1.0",
+    "coffee-script": "^1.11.1",
+    "coffeeify": "^2.0.1",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^1.2.0",
+    "debug": "^2.2.0",
     "ejs": "^1.0.0",
-    "express": "^4.0.0",
-    "lodash": "^2.4.1",
-    "mongoskin": "^1.4.4",
-    "morgan": "*",
-    "passport": "^0.2.1",
-    "passport-google-oauth": "^0.1.5"
+    "envify": "^3.4.1",
+    "express": "^4.14.0",
+    "jshint": "^2.9.3",
+    "less": "^2.7.1",
+    "livereload": "^0.3.7",
+    "lodash": "^2.4.2",
+    "mocha": "^2.5.3",
+    "mongodb": "^1.4.0",
+    "mongoskin": "^1.4.13",
+    "morgan": "^1.7.0",
+    "nodemon": "^1.11.0",
+    "passport": "^0.2.2",
+    "passport-google-oauth": "^0.1.5",
+    "react": "^15.3.2",
+    "react-tools": "^0.13.3",
+    "reactify": "^1.1.1",
+    "sinon": "^1.17.6",
+    "uglify-js": "^2.7.3",
+    "watchify": "^3.7.0"
   },
   "devDependencies": {
     "browserify": "*",
