@@ -2,7 +2,7 @@ debug = require('debug')('vocabulary:mongo-users')
 
 class MongoUsers
   constructor: (@db, @seed) ->
-    @users = db.collection('users')
+    @users = @db.collection('users')
 
   findOrCreate: (user, callback) ->
     user.createDate = new Date()

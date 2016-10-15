@@ -3,7 +3,7 @@ debug = require('debug')('vocabulary:mongo-wordlists')
 
 class MongoWordlists
   constructor: (@db, @seed) ->
-    @wordlists = db.collection('wordlists')
+    @wordlists = @db.collection('wordlists')
 
   find: (filter, callback) ->
     query = {
