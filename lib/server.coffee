@@ -43,7 +43,7 @@ if isDevelopment()
     callbackURL: "http://localhost:3000/auth/google/callback"
   }
 
-dbUrl = process.env['MONGOHQ_URL'] or 'mongodb://@localhost:27017/vocabulary-dev'
+dbUrl = process.env['MONGODB_URI'] or 'mongodb://@localhost:27017/vocabulary-dev'
 console.log("Connecting to Mongo: #{dbUrl}")
 
 db = mongoskin.db(dbUrl, {safe:true})
